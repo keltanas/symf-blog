@@ -1,0 +1,55 @@
+/*!
+ * Stylesheets for blog
+ */
+
+@baseFontSize: 12px;
+@baseFontFamily: "Verdana";
+
+body {
+    background: url('../img/bg.jpg');
+    height: 100%;
+}
+
+.rounded-corners (@radius: 5px) {
+    border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+}
+
+#content {
+    background: #fff;
+    min-height: 100%;
+    padding: 20px;
+    margin: 20px auto;
+    .rounded-corners(20px);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+    h1, h2, h3 {
+        font-family: "Georgia";
+        font-weight: normal;
+        margin: 0 0 0.5em 0;
+    }
+    p {
+        font-size: @baseFontSize;
+        font-family: @baseFontFamily;
+        margin: 0 0 .5em 0;
+    }
+    h1 {
+        font-size: @baseFontSize * 2;
+    }
+    h2 {
+        font-size: @baseFontSize * 1.8;
+    }
+    h3 {
+        font-size: @baseFontSize * 1.5;
+    }
+}
+
+
+textarea {
+    width: 100%;
+    min-height: 300px;
+}
+
+
+

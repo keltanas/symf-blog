@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ "Post creation"|trans }}{% endblock %}
+
+{% block body -%}
+    <form action="{{ path('post_create') }}" method="post"
+          novalidate="novalidate" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit" class="btn btn-small">{{ "Create"|trans }}</button>
+        </p>
+        <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
+            {{ "Back to homepage"|trans }}
+        </a>
+
+    </form>
+{% endblock %}

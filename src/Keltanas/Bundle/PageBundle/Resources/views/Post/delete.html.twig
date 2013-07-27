@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ "Deleting"|trans }}{% endblock %}
+
+{% block body -%}
+<p>{{ "Really want to delete?"|trans }}</p>
+<form action="{{ path('post_delete', { 'id': entity.id }) }}" method="post">
+    <input type="hidden" name="_method" value="DELETE" />
+    {{ form_widget(delete_form) }}
+    <button type="submit" class="btn btn-small">{{ "Delete"|trans }}</button>
+    <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
+        {{ "Back to homepage"|trans }}
+    </a>
+
+</form>
+{% endblock %}

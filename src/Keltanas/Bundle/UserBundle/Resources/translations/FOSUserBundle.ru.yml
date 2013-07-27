@@ -1,0 +1,13 @@
+layout:
+    login: Войти
+    register: Регистрация
+
+profile:
+    edit: Редактировать профиль
+    title: Профиль
+
+change:
+    password: Изменить пароль
+
+login:
+    title: Вход

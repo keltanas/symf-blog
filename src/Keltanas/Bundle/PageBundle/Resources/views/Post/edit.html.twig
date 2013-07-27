@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ "Post edit"|trans }} {{ entity.title }}{% endblock %}
+
+{% block body -%}
+    <form action="{{ path('post_update', { 'id': entity.id }) }}" method="post"
+          novalidate="novalidate" {{ form_enctype(edit_form) }}>
+        <input type="hidden" name="_method" value="PUT" />
+        {{ form_widget(edit_form) }}
+
+        <hr>
+        <button class="btn btn-small btn-success" type="submit">
+            {{ "Save"|trans }}
+        </button>
+        <a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn btn-small btn-danger">
+            {{ "Delete"|trans }}
+        </a>
+        <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
+            {{ "Back to homepage"|trans }}
+        </a>
+
+    </form>
+
+    {#<form action="{{ path('post_delete', { 'id': entity.id }) }}" method="post">#}
+        {#<input type="hidden" name="_method" value="DELETE" />#}
+        {#{{ form_widget(delete_form) }}#}
+        {#<button type="submit" class="btn btn-small btn-danger">Delete</button>#}
+    {#</form>#}
+{% endblock %}

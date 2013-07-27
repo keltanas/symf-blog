@@ -1,13 +1,85 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head lang="{{ app.request.locale }}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{{ "blog.title"|trans }}{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
+
+    {# highlighter link http://softwaremaniacs.org/soft/highlight/download/#}
+    <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+    <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="navbar navbar-static-top navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container">
+                <img class="brand" width="20" height="20" src="http://www.gravatar.com/avatar/21af37fd6191e7c1e42d9e41451bc771.png">
+                {{ knp_menu_render('KeltanasPageBundle:Builder:mainMenu', {'nav_type': 'navbar'}) }}
+                {% if is_granted('ROLE_USER') %}
+                <ul class="nav pull-right">
+                    <li>
+                        <a href="{{ path('post_new') }}">
+                            <span class="icon icon-white icon-plus"></span> {{ "New post"|trans }}</a>
+                    </li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="{{ path("fos_user_profile_show") }}">{{ app.user.username }}</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}">{{ "Logout"|trans }}</a></li>
+                </ul>
+                {% else %}
+                <ul class="nav pull-right">
+                    <li><a href="{{ path('fos_user_security_login') }}">{{ "Login"|trans }}</a></li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-fixed-bottom navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container">
+                <ul class="nav">
+                    <li>
+                        <span class="brand"><small>&copy; Nikolay Ermin aka KelTanas {{ "now"|date('Y') }}</small></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="content">
+            <div class="row-fluid">
+                <div class="span9">
+                    <h1>{{ block('title') }}</h1>
+
+                    {% for type, messages in app.session.flashbag.all() %}
+                    <ul class="alert alert-{{ type }}">
+                        {% for key, message in messages %}
+                        <li>{{ message|trans({}, 'FOSUserBundle') }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endfor %}
+
+                    {% block body %}{% endblock %}
+                </div>
+                <div class="span3">
+                    {#<h3>Tags</h3>#}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block javascripts %}{% endblock %}
+</body>
 </html>
