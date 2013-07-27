@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Keltanas\Bundle\PageBundle\Entity\Post;
 use Keltanas\Bundle\PageBundle\Form\PostType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Post controller.
@@ -44,6 +45,7 @@ class PostController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->setAccount($this->getUser());
             $entity->setContentHtml($this->getMarkdown()->transformMarkdown($entity->getContentMd()));
             $em->persist($entity);
             $em->flush();
@@ -87,8 +89,6 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('KeltanasPageBundle:Post:show.html.twig', array(
             'entity'      => $entity,
         ));
@@ -102,10 +102,17 @@ class PostController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        /** @var Post $entity */
         $entity = $em->getRepository('KeltanasPageBundle:Post')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Post entity.');
+        }
+
+        if (!$this->$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            if ($entity->getAccount()->getId() !== $this->getUser()->getId()) {
+                throw new AccessDeniedException("Post belongs to another author");
+            }
         }
 
         $editForm = $this->createForm(new PostType(), $entity);
@@ -131,6 +138,12 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
+        if (!$this->$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            if ($entity->getAccount()->getId() !== $this->getUser()->getId()) {
+                throw new AccessDeniedException("Post belongs to another author");
+            }
+        }
+
         $editForm = $this->createForm(new PostType(), $entity);
         $editForm->submit($request);
 
@@ -141,7 +154,7 @@ class PostController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('post_edit', array('id' => $id)));
+                return $this->redirect($this->generateUrl('post_show', array('id' => $id)));
             }
         } catch(OptimisticLockException $e) {
             $this->getFlashBag()
@@ -169,6 +182,12 @@ class PostController extends Controller
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Post entity.');
+        }
+
+        if (!$this->$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            if ($entity->getAccount()->getId() !== $this->getUser()->getId()) {
+                throw new AccessDeniedException("Post belongs to another author");
+            }
         }
 
         if ($form->isValid()) {

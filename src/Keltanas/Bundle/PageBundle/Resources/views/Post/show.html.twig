@@ -1,25 +1,40 @@
 {% extends '::base.html.twig' %}
 
-{% block title -%}{{ entity.title }}{% endblock %}
+{% block title -%}
+    {% if entity.status or is_granted('ROLE_USER') %}
+    {{ entity.title }}{% else %}
+    {{ "Draft"|trans }}{% endif %}
+{% endblock %}
 
 {% block body -%}
 
-    {{ entity.contentHtml|raw }}
+    {% if 0 == entity.status %}
+        <div class="alert alert-danger">
+            {{ "This is draft"|trans }}
+        </div>
+    {% endif %}
 
-    <div class="pull-left"><small>{{ "Tags"|trans }}: {{ entity.tags }}</small></div>
-    <div class="text-right"><small>{{ "Created at"|trans }}: {{ entity.createdAt|date("d.m.Y H:i") }}</small></div>
+    {% if is_granted('ROLE_USER') or entity.status %}
+        {{ entity.contentHtml|raw }}
+        {% if entity.tags %}
+        <div class="pull-left"><i class="icon icon-tags"></i> <small>{{ entity.tags }}</small></div>
+        {% endif %}
+        <div class="text-right">
+            <small>{{ "Created at"|trans }}: {{ entity.createdAt|date("d.m.Y H:i") }}</small><br>
+            <small>{{ "Author"|trans }}: {{ entity.account.username }}</small>
+        </div>
+        <hr>
 
-    <hr>
-
-    <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
-        {{ "Back to homepage"|trans }}
-    </a>
-    {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn btn-small">
-        {{ "Edit"|trans }}
-    </a>
-    <a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn btn-small">
-        {{ "Delete"|trans }}
-    </a>
+        <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
+            {{ "Back to homepage"|trans }}
+        </a>
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn btn-small btn-primary">
+            {{ "Edit"|trans }}
+        </a>
+        <a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn btn-small btn-danger">
+            {{ "Delete"|trans }}
+        </a>
+        {% endif %}
     {% endif %}
 {% endblock %}

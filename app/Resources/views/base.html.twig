@@ -32,10 +32,11 @@
                 <ul class="nav pull-right">
                     <li>
                         <a href="{{ path('post_new') }}">
-                            <span class="icon icon-white icon-plus"></span> {{ "New post"|trans }}</a>
+                            <span class="icon icon-white icon-plus-sign"></span> {{ "New post"|trans }}</a>
                     </li>
                     <li class="divider-vertical"></li>
-                    <li><a href="{{ path("fos_user_profile_show") }}">{{ app.user.username }}</a></li>
+                    <li><a href="{{ path("fos_user_profile_show") }}">
+                            <i class="icon icon-white icon-user"></i> {{ app.user.username }}</a></li>
                     <li class="divider-vertical"></li>
                     <li><a href="{{ path('fos_user_security_logout') }}">{{ "Logout"|trans }}</a></li>
                 </ul>
@@ -53,6 +54,12 @@
                 <ul class="nav">
                     <li>
                         <span class="brand"><small>&copy; Nikolay Ermin aka KelTanas {{ "now"|date('Y') }}</small></span>
+                    </li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li>
+                        <a href="https://github.com/keltanas/symf-blog" target="_blank">
+                            <i class="icon icon-white icon-share"></i> On Github</a>
                     </li>
                 </ul>
             </div>

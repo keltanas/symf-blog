@@ -3,6 +3,7 @@
 namespace Keltanas\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Keltanas\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -78,6 +79,14 @@ class Post
      * @ORM\Version @ORM\Column(name="version", type="integer")
      */
     private $version;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="\Keltanas\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
+     */
+    private $account;
 
 
     /**
@@ -290,4 +299,22 @@ class Post
     {
         return $this->version;
     }
+
+    /**
+     * @param \Keltanas\Bundle\UserBundle\Entity\User $account
+     */
+    public function setAccount($account)
+    {
+        $this->account = $account;
+    }
+
+    /**
+     * @return \Keltanas\Bundle\UserBundle\Entity\User
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+
 }

@@ -22,7 +22,11 @@ class DefaultController extends Controller
         $rep = $em->getRepository('KeltanasPageBundle:Post');
 
         $paginator = $this->getKnpPaginator();
-        $query = $rep->createQueryBuilder('p')->orderBy('p.createdAt', 'desc')->getQuery();
+        $query = $rep->createQueryBuilder('p')
+            ->where('p.status = :status')
+            ->setParameter('status', 1)
+            ->orderBy('p.createdAt', 'desc')
+            ->getQuery();
         $count = $rep->getCount();
 
         $query->setHint('knp_paginator.count', $count);

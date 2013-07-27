@@ -2,6 +2,8 @@ Back to homepage: Назад на главную
 Update: Изменить
 Edit: Править
 Create: Создать
+Delete: Удалить
+Save: Сохранить
 
 Created at: Создано
 Updated at: Изменено
@@ -13,8 +15,19 @@ Post creation: Создание поста
 Post edit: Редактирование поста
 Post list: Список постов
 
+Status: Состояние
+Choice an status: Выбери состояние
+Draft: Черновик
+Published: Опубликовано
+This is draft: Это черновик
+
 Home: Главная
 About Me: Обо мне
+
+Title: Титул
+Actions: Действия
+
+Author: Автор
 
 blog:
     title: Блог

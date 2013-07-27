@@ -33,7 +33,8 @@ security:
     access_control:
         - { path: ^/admin/, roles: ROLE_ADMIN }
         - { path: ^/post/\d+/(edit|update|delete), roles: ROLE_ADMIN }
+        - { path: ^/post/\d+, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/post/(create|new), roles: ROLE_USER }
-        - { path: ^/post, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/post, roles: ROLE_USER }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

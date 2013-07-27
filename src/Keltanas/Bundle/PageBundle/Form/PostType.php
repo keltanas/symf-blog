@@ -27,7 +27,10 @@ class PostType extends AbstractType
                         'class' => 'input-xxlarge',
                     ]
                 ])
-            ->add('status', 'hidden')
+            ->add('status', 'choice', [
+                    'choices' => ['Draft', 'Published'],
+                    'empty_value' => 'Choice an status',
+                ])
 //            ->add('createdAt')
 //            ->add('updatedAt')
             ->add('version', 'hidden')
