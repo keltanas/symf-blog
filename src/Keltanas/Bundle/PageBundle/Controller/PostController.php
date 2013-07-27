@@ -4,6 +4,9 @@ namespace Keltanas\Bundle\PageBundle\Controller;
 
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\OptimisticLockException;
+use Keltanas\Bundle\PageBundle\Repository\PostRepository;
+use Knp\Component\Pager\Pagination\SlidingPagination;
+use Knp\Component\Pager\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -26,8 +29,28 @@ class PostController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        /** @var PostRepository $rep */
+        $rep = $em->getRepository('KeltanasPageBundle:Post');
 
-        $entities = $em->getRepository('KeltanasPageBundle:Post')->findAll();
+        $paginator = $this->getKnpPaginator();
+        $qb = $rep->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'desc');
+
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $qb->where('p.account = :user')->setParameter('user', $this->getUser()->getId());
+        }
+
+        $query = $qb->getQuery();
+        $count = $rep->getCount($this->getUser());
+
+        $query->setHint('knp_paginator.count', $count);
+
+        /** @var $pagination SlidingPagination */
+        $entities = $paginator->paginate(
+            $query,
+            $this->getRequest()->query->getInt('page', 1),
+            20
+        );
 
         return $this->render('KeltanasPageBundle:Post:index.html.twig', array(
             'entities' => $entities,
@@ -109,7 +132,7 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
-        if (!$this->$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             if ($entity->getAccount()->getId() !== $this->getUser()->getId()) {
                 throw new AccessDeniedException("Post belongs to another author");
             }
@@ -138,7 +161,7 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
-        if (!$this->$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             if ($entity->getAccount()->getId() !== $this->getUser()->getId()) {
                 throw new AccessDeniedException("Post belongs to another author");
             }
@@ -184,7 +207,7 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
-        if (!$this->$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             if ($entity->getAccount()->getId() !== $this->getUser()->getId()) {
                 throw new AccessDeniedException("Post belongs to another author");
             }
@@ -239,6 +262,14 @@ class PostController extends Controller
     public function getFlashBag()
     {
         return $this->get('session')->getFlashBag();
+    }
+
+    /**
+     * @return Paginator
+     */
+    public function getKnpPaginator()
+    {
+        return $this->get('knp_paginator');
     }
 
 }

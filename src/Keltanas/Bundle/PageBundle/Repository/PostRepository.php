@@ -3,6 +3,7 @@
 namespace Keltanas\Bundle\PageBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Keltanas\Bundle\UserBundle\Entity\User;
 
 /**
  * PostRepository
@@ -13,12 +14,17 @@ use Doctrine\ORM\EntityRepository;
 class PostRepository extends EntityRepository
 {
     /**
-     * @return mixed
+     * @param User $user
+     *
+     * @return int
      */
-    public function getCount()
+    public function getCount(User $user = null)
     {
         $qb = $this->createQueryBuilder('p');
         $qb->select($qb->expr()->count('p'));
+        if (null !== $user) {
+            $qb->where('p.account = :user')->setParameter('user', $user->getId());
+        }
         return $qb->getQuery()->getSingleScalarResult();
     }
 }
