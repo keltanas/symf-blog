@@ -15,3 +15,5 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     gravatar_hash: ~
+    google_analytics: ~
+

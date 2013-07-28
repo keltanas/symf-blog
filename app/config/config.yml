@@ -27,6 +27,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         gravatar_hash: %gravatar_hash%
+        google_analytics: %google_analytics%
 #    form:
 #        resources:
 #            - "AcmeBundle:Form:form_div_layout.html.twig"
