@@ -13,15 +13,13 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
 
     {% stylesheets  'bundles/keltanaspage/less/style.less'
-                    'http://yandex.st/highlightjs/7.3/styles/default.min.css'
                     filter='cssrewrite' filter="less" filter='?yui_css' output="css/style.css" %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
+    <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
-
+    <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
     {% block stylesheets %}{% endblock %}
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
-
     {# highlighter link http://softwaremaniacs.org/soft/highlight/download/#}
 </head>
 <body>
