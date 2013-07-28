@@ -20,7 +20,7 @@ body {
     background: #fff;
     min-height: 100%;
     padding: 20px;
-    margin: 20px auto;
+    margin: 20px auto 65px auto;
     .rounded-corners(20px);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 
@@ -43,6 +43,12 @@ body {
     h3 {
         font-size: @baseFontSize * 1.5;
     }
+    pre {
+        padding: 0;
+        code {
+            padding: 10px;
+        }
+    }
 }
 
 
@@ -51,5 +57,14 @@ textarea {
     min-height: 300px;
 }
 
-
+.navbar-fixed-bottom {
+    .github-icon {
+        display: inline;
+        width: 0;
+        height: 0;
+        padding: 16px;
+        margin: 0 5px 0 0;
+        background: url("../img/GitHub-Mark-32px.png") no-repeat 0 0;
+    }
+}
 

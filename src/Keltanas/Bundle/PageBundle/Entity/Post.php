@@ -4,6 +4,7 @@ namespace Keltanas\Bundle\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Keltanas\Bundle\UserBundle\Entity\User;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Keltanas\Bundle\PageBundle\Repository\PostRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Post
+class Post extends ContainerAware
 {
     /**
      * @var integer
@@ -34,6 +35,13 @@ class Post
     /**
      * @var string
      *
+     * @ORM\Column(name="canonical_title", type="string", length=255)
+     */
+    private $canonicalTitle;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="content_md", type="text")
      */
     private $contentMd;
@@ -44,6 +52,13 @@ class Post
      * @ORM\Column(name="content_html", type="text")
      */
     private $contentHtml;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content_cuted_html", type="text")
+     */
+    private $contentCutedHtml;
 
     /**
      * @var string
@@ -123,6 +138,31 @@ class Post
     }
 
     /**
+     * @param string $canonicalTitle
+     */
+    public function setCanonicalTitle($canonicalTitle)
+    {
+        $this->canonicalTitle = $canonicalTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCanonicalTitle()
+    {
+        return $this->canonicalTitle;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     * @ORM\PrePersist
+     */
+    public function setCaconicatTitleValue()
+    {
+        $this->canonicalTitle = "";
+    }
+
+    /**
      * Set contentMd
      *
      * @param string $contentMd
@@ -143,6 +183,22 @@ class Post
     public function getContentMd()
     {
         return $this->contentMd;
+    }
+
+    /**
+     * @param string $contentCutedHtml
+     */
+    public function setContentCutedHtml($contentCutedHtml)
+    {
+        $this->contentCutedHtml = $contentCutedHtml;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentCutedHtml()
+    {
+        return $this->contentCutedHtml ?: $this->getContentHtml();
     }
 
     /**
@@ -190,6 +246,15 @@ class Post
     {
         return $this->tags;
     }
+
+    /**
+     * @return array
+     */
+    public function getTagsArray()
+    {
+        return preg_split('/\s*,\s*/',trim($this->getTags()),-1,PREG_SPLIT_NO_EMPTY);
+    }
+
 
     /**
      * Set status

@@ -1,0 +1,8 @@
+<h3>{{ "Tags cloud"|trans }}</h3>
+
+{% for tag in tags %}
+<div style="font-size: {{ tag.freqPercent }}px">
+    <a href="{{ path("keltanas_page_tag", {name: tag.name}) }}">{{ tag.name }}</a>
+    <small>({{ tag.freq }})</small>
+</div>
+{% endfor %}

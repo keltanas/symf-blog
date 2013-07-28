@@ -6,6 +6,10 @@ keltanas_page_about:
     pattern:  /about
     defaults: { _controller: KeltanasPageBundle:Default:about }
 
+keltanas_page_tag:
+    pattern: /tag/{name}
+    defaults: { _controller: KeltanasPageBundle:Tag:index }
+
 keltanas_page_post:
     resource: "@KeltanasPageBundle/Resources/config/routing/post.yml"
     prefix:   /post

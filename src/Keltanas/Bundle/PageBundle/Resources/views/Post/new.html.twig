@@ -8,11 +8,11 @@
 
         {{ form_widget(form) }}
         <p>
-            <button type="submit" class="btn btn-small">{{ "Create"|trans }}</button>
+            <button type="submit" class="btn btn-small btn-success">{{ "Create"|trans }}</button>
+            <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
+                {{ "Back to homepage"|trans }}
+            </a>
         </p>
-        <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
-            {{ "Back to homepage"|trans }}
-        </a>
 
     </form>
 {% endblock %}

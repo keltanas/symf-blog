@@ -4,7 +4,9 @@ namespace Keltanas\Bundle\PageBundle\Controller;
 
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\OptimisticLockException;
+use Keltanas\Bundle\PageBundle\Entity\Tag;
 use Keltanas\Bundle\PageBundle\Repository\PostRepository;
+use Keltanas\Bundle\PageBundle\Repository\TagRepository;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Knp\Component\Pager\Paginator;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,6 +58,7 @@ class PostController extends Controller
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Post entity.
      *
@@ -69,7 +72,15 @@ class PostController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity->setAccount($this->getUser());
-            $entity->setContentHtml($this->getMarkdown()->transformMarkdown($entity->getContentMd()));
+            $entity->setContentCutedHtml(
+                $this->getMarkdown()->transformMarkdown(explode('[cut]', $entity->getContentMd())[0])
+            );
+            $entity->setContentHtml(
+                $this->getMarkdown()->transformMarkdown(str_replace('[cut]', '', $entity->getContentMd()))
+            );
+            if ($entity->getStatus()) {
+                $this->addTags($entity->getTagsArray());
+            }
             $em->persist($entity);
             $em->flush();
 
@@ -167,13 +178,32 @@ class PostController extends Controller
             }
         }
 
+        $oldTags = $entity->getTagsArray();
+        $oldStatus = $entity->getStatus();
         $editForm = $this->createForm(new PostType(), $entity);
         $editForm->submit($request);
 
         try {
             if ($editForm->isValid()) {
                 $em->lock($entity, LockMode::OPTIMISTIC, $entity->getVersion());
-                $entity->setContentHtml($this->getMarkdown()->transformMarkdown($entity->getContentMd()));
+                $entity->setContentCutedHtml(
+                    $this->getMarkdown()->transformMarkdown(explode('[cut]', $entity->getContentMd())[0])
+                );
+                $entity->setContentHtml(
+                    $this->getMarkdown()->transformMarkdown(str_replace('[cut]', '', $entity->getContentMd()))
+                );
+
+                $newTags = $entity->getTagsArray();
+                $newStatus = $entity->getStatus();
+                if ($newStatus && $newStatus == $oldStatus) {
+                    $this->addTags(array_values(array_diff($newTags, $oldTags)));
+                    $this->removeTags(array_values(array_diff($oldTags, $newTags)));
+                } elseif ($newStatus && !$oldStatus) {
+                    $this->addTags(array_values($newTags));
+                } elseif (!$newStatus && $oldStatus) {
+                    $this->removeTags(array_values($oldTags));
+                }
+
                 $em->persist($entity);
                 $em->flush();
 
@@ -272,4 +302,45 @@ class PostController extends Controller
         return $this->get('knp_paginator');
     }
 
+    /**
+     * @param array $tags
+     */
+    protected function addTags(array $tags)
+    {
+        if (!$tags) {
+            return;
+        }
+        $em = $this->getDoctrine()->getManager();
+        /** @var TagRepository $tagRepository */
+        $tagRepository = $em->getRepository('KeltanasPageBundle:Tag');
+        foreach ($tags as $tagName) {
+            $tag = $tagRepository->findOneBy(['name'=>$tagName]);
+            if (!$tag) {
+                $tag = new Tag();
+                $tag->setName($tagName);
+                $tag->setFreq(0);
+            }
+            $tag->setFreq($tag->getFreq() + 1);
+            $em->persist($tag);
+        }
+    }
+
+    /**
+     * @param array $tags
+     */
+    protected function removeTags(array $tags)
+    {
+        if (!$tags) {
+            return;
+        }
+        $em = $this->getDoctrine()->getManager();
+        /** @var TagRepository $tagRepository */
+        $tagRepository = $em->getRepository('KeltanasPageBundle:Tag');
+        $tagsList = $tagRepository->findBy(['name'=>$tags]);
+        /** @var Tag $tag */
+        foreach ($tagsList as $tag) {
+            $tag->setFreq($tag->getFreq() - 1);
+            $em->persist($tag);
+        }
+    }
 }

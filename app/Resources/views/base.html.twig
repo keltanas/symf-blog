@@ -10,23 +10,32 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+
+    {% stylesheets  'bundles/keltanaspage/less/style.less'
+                    'http://yandex.st/highlightjs/7.3/styles/default.min.css'
+                    filter='cssrewrite' filter="less" filter='?yui_css' output="css/style.css" %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
     {% block stylesheets %}{% endblock %}
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
 
     {# highlighter link http://softwaremaniacs.org/soft/highlight/download/#}
-    <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
-    <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
     <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+
+
+    {# HEADER #}
+
     <div class="navbar navbar-static-top navbar-inverse">
         <div class="navbar-inner">
             <div class="container">
-                <img class="brand" width="20" height="20" src="http://www.gravatar.com/avatar/21af37fd6191e7c1e42d9e41451bc771.png">
+                <img class="brand" width="20" height="20" src="http://www.gravatar.com/avatar/{{ gravatar_hash }}.png">
                 {{ knp_menu_render('KeltanasPageBundle:Builder:mainMenu', {'nav_type': 'navbar'}) }}
                 {% if is_granted('ROLE_USER') %}
                 <ul class="nav pull-right">
@@ -34,6 +43,7 @@
                         <a href="{{ path('post_new') }}">
                             <span class="icon icon-white icon-plus-sign"></span> {{ "New post"|trans }}</a>
                     </li>
+                    <li><a href="{{ path('post') }}">{{ "All posts"|trans }}</a></li>
                     <li class="divider-vertical"></li>
                     <li><a href="{{ path("fos_user_profile_show") }}">
                             <i class="icon icon-white icon-user"></i> {{ app.user.username }}</a></li>
@@ -48,23 +58,9 @@
             </div>
         </div>
     </div>
-    <div class="navbar navbar-fixed-bottom navbar-inverse">
-        <div class="navbar-inner">
-            <div class="container">
-                <ul class="nav">
-                    <li>
-                        <span class="brand"><small>&copy; Nikolay Ermin aka KelTanas {{ "now"|date('Y') }}</small></span>
-                    </li>
-                </ul>
-                <ul class="nav pull-right">
-                    <li>
-                        <a href="https://github.com/keltanas/symf-blog" target="_blank">
-                            <i class="icon icon-white icon-share"></i> On Github</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+
+    {# BODY #}
+
     <div class="container">
         <div id="content">
             <div class="row-fluid">
@@ -82,11 +78,36 @@
                     {% block body %}{% endblock %}
                 </div>
                 <div class="span3">
-                    {#<h3>Tags</h3>#}
+
+                    {{ render(controller('KeltanasPageBundle:Tag:tagsCloud')) }}
+
                 </div>
             </div>
         </div>
     </div>
+
+    {# FOOTER #}
+
+    <div class="navbar navbar-fixed-bottom navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container">
+                <ul class="nav">
+                    <li>
+                        <span class="brand"><small>&copy; Nikolay Ermin aka KelTanas {{ "now"|date('Y') }}</small></span>
+                    </li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li>
+                        <a href="https://github.com/keltanas/symf-blog" target="_blank">
+                            <i class="github-icon"></i>On Github</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     {% block javascripts %}{% endblock %}
 </body>
 </html>

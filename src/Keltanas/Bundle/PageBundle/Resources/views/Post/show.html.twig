@@ -16,6 +16,7 @@
 
     {% if is_granted('ROLE_USER') or entity.status %}
         {{ entity.contentHtml|raw }}
+        <hr>
         {% if entity.tags %}
         <div class="pull-left"><i class="icon icon-tags"></i> <small>{{ entity.tags }}</small></div>
         {% endif %}
