@@ -28,6 +28,7 @@ twig:
     globals:
         gravatar_hash: %gravatar_hash%
         google_analytics: %google_analytics%
+        google_plus_id: %google_plus_id%
 #    form:
 #        resources:
 #            - "AcmeBundle:Form:form_div_layout.html.twig"
@@ -57,7 +58,28 @@ assetic:
     assets:
         bootstrap_css:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/bootstrap.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/variables.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/mixins.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/reset.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/scaffolding.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/grid.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/layouts.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/type.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/code.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/forms.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/tables.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/sprites.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/wells.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/close.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/buttons.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/button-groups.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/navs.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/navbar.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/breadcrumbs.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/pagination.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/pager.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/labels-badges.less
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/utilities.less
             filters:
                 - less
                 - cssrewrite

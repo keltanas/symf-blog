@@ -16,11 +16,23 @@
                     filter='cssrewrite' filter="less" filter='?yui_css' output="css/style.css" %}
     <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
+
+    {# highlighter @link http://softwaremaniacs.org/soft/highlight/download/ #}
     <link rel="stylesheet" href="https://yandex.st/highlightjs/7.3/styles/default.min.css">
     {% block stylesheets %}{% endblock %}
 
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    {# highlighter @link http://softwaremaniacs.org/soft/highlight/download/ #}
+    <!-- MICROFORMATS FOR GPLUS -->
+    <link href="https://plus.google.com/{{ google_plus_id }}" rel="publisher" />
+    <meta itemprop="name" content="{{ block('title') }}">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://www.gravatar.com/avatar/{{ gravatar_hash }}.png">
+
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-touch-icon-57x57.png') }}" />
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('apple-touch-icon-72x72.png') }}" />
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('apple-touch-icon-114x114.png') }}" />
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('apple-touch-icon-144x144.png') }}" />
 </head>
 <body>
     <!--[if lt IE 7]>
