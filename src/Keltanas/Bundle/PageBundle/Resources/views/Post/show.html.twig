@@ -18,16 +18,16 @@
         {{ entity.contentHtml|raw }}
         <hr>
         {% if entity.tags %}
-        <div class="pull-left"><i class="icon icon-tags"></i> <small>{{ entity.tags }}</small></div>
+        <div class="pull-left">
+            <i class="icon icon-tags"></i> <small>{{ entity.tags }}</small><br>
+            <a href="{{ path('keltanas_page_homepage') }}">{{ "Back to homepage"|trans }}</a>
+        </div>
         {% endif %}
         <div class="text-right">
             <small>{{ "Created at"|trans }}: {{ entity.createdAt|date("d.m.Y H:i") }}</small><br>
             <small>{{ "Author"|trans }}: {{ entity.account.username }}</small>
         </div>
 
-        <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
-            {{ "Back to homepage"|trans }}
-        </a>
         {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn btn-small btn-primary">
             {{ "Edit"|trans }}
@@ -39,6 +39,7 @@
 
 
         {% if disqus_shortname %}
+        <hr>
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
