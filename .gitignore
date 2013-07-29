@@ -17,3 +17,6 @@ app/config/parameters.yml
 
 # IDEA
 .idea
+
+# google
+web/google*
