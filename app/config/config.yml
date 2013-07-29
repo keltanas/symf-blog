@@ -29,6 +29,7 @@ twig:
         gravatar_hash: %gravatar_hash%
         google_analytics: %google_analytics%
         google_plus_id: %google_plus_id%
+        disqus_shortname: %disqus_shortname%
 #    form:
 #        resources:
 #            - "AcmeBundle:Form:form_div_layout.html.twig"

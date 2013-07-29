@@ -17,3 +17,5 @@ parameters:
     gravatar_hash: ~
     google_analytics: ~
     google_plus_id: ~
+
+    disqus_shortname: ~
