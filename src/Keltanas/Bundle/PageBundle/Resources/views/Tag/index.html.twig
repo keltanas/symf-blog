@@ -3,6 +3,8 @@
 {% block title %}{{ "Tag"|trans }}: {{ name }}{% endblock %}
 
 {% block body %}
+    <h1>{{ block('title') }}</h1>
+
     {% for entity in entities %}
     <h2><a href="{{ path('post_show', {id: entity.id}) }}">{{ entity.title }}</a></h2>
     {{ entity.contentCutedHtml|raw }}

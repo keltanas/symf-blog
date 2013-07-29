@@ -1,9 +1,8 @@
 {% extends '::base.html.twig' %}
 
-{% block title -%}
-    {% if entity.status or is_granted('ROLE_USER') %}
-    {{ entity.title }}{% else %}
-    {{ "Draft"|trans }}{% endif %}
+{% block title -%}{% if entity.status or is_granted('ROLE_USER') %}
+{{ entity.title|trim }}{% else %}
+{{ "Draft"|trans }}{% endif %}
 {% endblock %}
 
 {% block body -%}
@@ -15,27 +14,37 @@
     {% endif %}
 
     {% if is_granted('ROLE_USER') or entity.status %}
-        {{ entity.contentHtml|raw }}
-        <hr>
-        {% if entity.tags %}
-        <div class="pull-left">
-            <i class="icon icon-tags"></i> <small>{{ entity.tags }}</small><br>
-            <a href="{{ path('keltanas_page_homepage') }}">{{ "Back to homepage"|trans }}</a>
-        </div>
-        {% endif %}
-        <div class="text-right">
-            <small>{{ "Created at"|trans }}: {{ entity.createdAt|date("d.m.Y H:i") }}</small><br>
-            <small>{{ "Author"|trans }}: {{ entity.account.username }}</small>
-        </div>
+        <div itemscope itemtype="http://schema.org/Article">
 
-        {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn btn-small btn-primary">
-            {{ "Edit"|trans }}
-        </a>
-        <a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn btn-small btn-danger">
-            {{ "Delete"|trans }}
-        </a>
-        {% endif %}
+            <h1 itemprop="name">{{ block("title") }}</h1>
+            <span itemprop="articleBody">{{ entity.contentHtml|raw }}</span>
+            <hr>
+            {% if entity.tags %}
+            <div class="pull-left">
+                <i class="icon icon-tags"></i> <small>{{ entity.tags }}</small><br>
+                <a href="{{ path('keltanas_page_homepage') }}">{{ "Back to homepage"|trans }}</a>
+            </div>
+            {% endif %}
+            <div class="text-right">
+                <small>{{ "Created at"|trans }}:
+                    <span itemprop="datePublished" content="{{ entity.createdAt|date("d.m.YTH:i") }}">
+                    {{ entity.createdAt|date("d.m.Y H:i") }}</span>
+                </small><br>
+                <small>{{ "Author"|trans }}:
+                    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                        <span itemprop="name">{{ entity.account.username }}</span></span>
+                </small>
+            </div>
+
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn btn-small btn-primary">
+                {{ "Edit"|trans }}
+            </a>
+            <a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn btn-small btn-danger">
+                {{ "Delete"|trans }}
+            </a>
+            {% endif %}
+            </div>
 
 
         {% if disqus_shortname %}

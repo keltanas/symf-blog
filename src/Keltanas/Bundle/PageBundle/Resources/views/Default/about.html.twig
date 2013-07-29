@@ -3,6 +3,8 @@
 {% block title %}{{ "About me"|trans }}{% endblock %}
 
 {% block body %}
+    <h1>{{ block('title') }}</h1>
+
     <p>
         <img src="https://www.gravatar.com/avatar/{{ gravatar_hash }}.png" alt="KelTanas" class="pull-right">
     </p>

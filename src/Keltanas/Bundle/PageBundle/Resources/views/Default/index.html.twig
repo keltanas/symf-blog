@@ -3,6 +3,8 @@
 {% block title %}KelTanas`s blog{% endblock %}
 
 {% block body %}
+    <h1>{{ block('title') }}</h1>
+
     {% for entity in entities %}
         {% if is_granted('ROLE_ADMIN') %}
         <div class="pull-right">

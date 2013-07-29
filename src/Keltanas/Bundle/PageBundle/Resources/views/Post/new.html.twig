@@ -3,6 +3,8 @@
 {% block title %}{{ "Post creation"|trans }}{% endblock %}
 
 {% block body -%}
+    <h1>{{ block('title') }}</h1>
+
     <form action="{{ path('post_create') }}" method="post"
           novalidate="novalidate" {{ form_enctype(form) }}>
 

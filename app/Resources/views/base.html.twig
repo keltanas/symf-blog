@@ -76,8 +76,6 @@
         <div id="content">
             <div class="row-fluid">
                 <div class="span9">
-                    <h1>{{ block('title') }}</h1>
-
                     {% for type, messages in app.session.flashbag.all() %}
                     <ul class="alert alert-{{ type }}">
                         {% for key, message in messages %}

@@ -3,6 +3,8 @@
 {% block title %}{{ "Post edit"|trans }} {{ entity.title }}{% endblock %}
 
 {% block body -%}
+    <h1>{{ block('title') }}</h1>
+
     <form action="{{ path('post_update', { 'id': entity.id }) }}" method="post"
           novalidate="novalidate" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
@@ -18,7 +20,6 @@
         <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
             {{ "Back to homepage"|trans }}
         </a>
-
     </form>
 
     {#<form action="{{ path('post_delete', { 'id': entity.id }) }}" method="post">#}
