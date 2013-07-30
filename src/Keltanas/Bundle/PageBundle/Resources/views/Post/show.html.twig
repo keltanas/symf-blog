@@ -27,7 +27,7 @@
             {% endif %}
             <div class="text-right">
                 <small>{{ "Created at"|trans }}:
-                    <span itemprop="datePublished" content="{{ entity.createdAt|date("d.m.YTH:i") }}">
+                    <span itemprop="datePublished" content="{{ entity.createdAt|date("c") }}">
                     {{ entity.createdAt|date("d.m.Y H:i") }}</span>
                 </small><br>
                 <small>{{ "Author"|trans }}:
