@@ -7,25 +7,25 @@ framework:
 #    validation:
 #        cache: apc
 
-doctrine:
-     orm:
-         metadata_cache_driver:
-             type: memcache
-             host: %doctrine_memcached_host%
-             port: %doctrine_memcached_port%
-             instance_class: Memcache
+#doctrine:
+#    orm:
+#        metadata_cache_driver:
+#            type: memcache
+#            host: %doctrine_memcached_host%
+#            port: %doctrine_memcached_port%
+#            instance_class: Memcache
 
-         result_cache_driver:
-             type: memcache
-             host: %doctrine_memcached_host%
-             port: %doctrine_memcached_port%
-             instance_class: Memcache
+#        result_cache_driver:
+#            type: memcache
+#            host: %doctrine_memcached_host%
+#            port: %doctrine_memcached_port%
+#            instance_class: Memcache
 
-         query_cache_driver:
-             type: memcache
-             host: %doctrine_memcached_host%
-             port: %doctrine_memcached_port%
-             instance_class: Memcache
+#        query_cache_driver:
+#            type: memcache
+#            host: %doctrine_memcached_host%
+#            port: %doctrine_memcached_port%
+#            instance_class: Memcache
 
 monolog:
     handlers:

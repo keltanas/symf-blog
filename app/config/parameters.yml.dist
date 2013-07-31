@@ -24,4 +24,5 @@ parameters:
     doctrine_memcached_port: 11211
     session_memcached_host: localhost
     session_memcached_port: 11211
-
+    session_memcached_prefix: blogses
+    session_memcached_expire: 84600
