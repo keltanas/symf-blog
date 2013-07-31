@@ -20,3 +20,4 @@ app/config/parameters.yml
 
 # google
 web/google*
+web/yandex*
