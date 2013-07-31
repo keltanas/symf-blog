@@ -9,9 +9,9 @@
     <h2><a href="{{ path('post_show', {id: entity.id}) }}">{{ entity.title }}</a></h2>
     {{ entity.contentCutedHtml|raw }}
     {% if entity.tags %}
-    <div class="pull-left"><i class="icon icon-tags"></i> <small>
+    <div class="pull-left">{{ "tags"|icon }} <small>
         {% for tag in entity.tagsArray %}
-            <a href="{{ path('keltanas_page_tag', {"name": tag}) }}">{{ tag }}</a>
+            <a href="{{ path('keltanas_page_tag', {"name": tag}) }}">{{ tag|label_info }}</a>
         {% endfor %}
         </small></div>
     {% endif %}

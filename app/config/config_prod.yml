@@ -1,15 +1,31 @@
 imports:
     - { resource: config.yml }
 
-#framework:
+framework:
+    session:
+        handler_id: session.handler.memcached
 #    validation:
 #        cache: apc
 
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
+doctrine:
+     orm:
+         metadata_cache_driver:
+             type: memcache
+             host: localhost
+             port: 11211
+             instance_class: Memcache
+
+         result_cache_driver:
+             type: memcache
+             host: localhost
+             port: 11211
+             instance_class: Memcache
+
+         query_cache_driver:
+             type: memcache
+             host: localhost
+             port: 11211
+             instance_class: Memcache
 
 monolog:
     handlers:
@@ -21,3 +37,14 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
+
+services:
+    session.memcached:
+        class: Memcached
+        calls:
+            - [ addServer, [ %session_memcached_host%, %session_memcached_port% ]]
+
+    session.handler.memcached:
+        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
+        arguments: [ @session.memcached, { prefix: %session_memcached_prefix%, expiretime: %session_memcached_expire% } ]
+
