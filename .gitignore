@@ -10,6 +10,7 @@ web/bundles/*
 web/img/*
 web/css/*
 web/js/*
+app/SymfonyRequirements.php
 
 # Configuration files
 app/config/parameters.ini

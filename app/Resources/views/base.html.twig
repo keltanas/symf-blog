@@ -13,12 +13,13 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
 
     {% stylesheets  'bundles/keltanaspage/less/style.less'
+                    'bundles/keltanaspage/css/highlightjs/ir_black.css'
                     filter='cssrewrite' filter="less" filter='?yui_css' output="css/style.css" %}
     <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
 
     {# highlighter @link http://softwaremaniacs.org/soft/highlight/download/ #}
-    <link rel="stylesheet" href="https://yandex.st/highlightjs/7.3/styles/default.min.css">
+    {#<link rel="stylesheet" href="https://yandex.st/highlightjs/7.3/styles/ir_black.min.css">#}
     {% block stylesheets %}{% endblock %}
 
     <!-- MICROFORMATS FOR GPLUS -->
@@ -115,7 +116,11 @@
         </div>
     </div>
 
-    <script src="https://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+    {#<script src="https://yandex.st/highlightjs/7.3/highlight.min.js"></script>#}
+    {% javascripts  '@KeltanasPageBundle/Resources/public/js/highlight.pack.js'
+                    filter='?yui_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <script>hljs.initHighlightingOnLoad();</script>
     {% block javascripts %}{% endblock %}
 
