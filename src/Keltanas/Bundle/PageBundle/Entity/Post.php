@@ -29,6 +29,7 @@ class Post extends ContainerAware
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -43,6 +44,7 @@ class Post extends ContainerAware
      * @var string
      *
      * @ORM\Column(name="content_md", type="text")
+     * @Assert\NotBlank()
      */
     private $contentMd;
 
@@ -63,7 +65,7 @@ class Post extends ContainerAware
     /**
      * @var string
      *
-     * @ORM\Column(name="tags", type="text")
+     * @ORM\Column(name="tags", type="text", nullable=true)
      */
     private $tags;
 

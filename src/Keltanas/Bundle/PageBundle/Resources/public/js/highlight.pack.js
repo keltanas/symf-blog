@@ -964,114 +964,6 @@ hljs.LANGUAGES['xml'] = function(hljs) {
     ]
   };
 }(hljs);
-hljs.LANGUAGES['apache'] = function(hljs) {
-  var NUMBER = {className: 'number', begin: '[\\$%]\\d+'};
-  return {
-    case_insensitive: true,
-    keywords: {
-      keyword: 'acceptfilter acceptmutex acceptpathinfo accessfilename action addalt ' +
-        'addaltbyencoding addaltbytype addcharset adddefaultcharset adddescription ' +
-        'addencoding addhandler addicon addiconbyencoding addiconbytype addinputfilter ' +
-        'addlanguage addmoduleinfo addoutputfilter addoutputfilterbytype addtype alias ' +
-        'aliasmatch allow allowconnect allowencodedslashes allowoverride anonymous ' +
-        'anonymous_logemail anonymous_mustgiveemail anonymous_nouserid anonymous_verifyemail ' +
-        'authbasicauthoritative authbasicprovider authdbduserpwquery authdbduserrealmquery ' +
-        'authdbmgroupfile authdbmtype authdbmuserfile authdefaultauthoritative ' +
-        'authdigestalgorithm authdigestdomain authdigestnccheck authdigestnonceformat ' +
-        'authdigestnoncelifetime authdigestprovider authdigestqop authdigestshmemsize ' +
-        'authgroupfile authldapbinddn authldapbindpassword authldapcharsetconfig ' +
-        'authldapcomparednonserver authldapdereferencealiases authldapgroupattribute ' +
-        'authldapgroupattributeisdn authldapremoteuserattribute authldapremoteuserisdn ' +
-        'authldapurl authname authnprovideralias authtype authuserfile authzdbmauthoritative ' +
-        'authzdbmtype authzdefaultauthoritative authzgroupfileauthoritative ' +
-        'authzldapauthoritative authzownerauthoritative authzuserauthoritative ' +
-        'balancermember browsermatch browsermatchnocase bufferedlogs cachedefaultexpire ' +
-        'cachedirlength cachedirlevels cachedisable cacheenable cachefile ' +
-        'cacheignorecachecontrol cacheignoreheaders cacheignorenolastmod ' +
-        'cacheignorequerystring cachelastmodifiedfactor cachemaxexpire cachemaxfilesize ' +
-        'cacheminfilesize cachenegotiateddocs cacheroot cachestorenostore cachestoreprivate ' +
-        'cgimapextension charsetdefault charsetoptions charsetsourceenc checkcaseonly ' +
-        'checkspelling chrootdir contentdigest cookiedomain cookieexpires cookielog ' +
-        'cookiename cookiestyle cookietracking coredumpdirectory customlog dav ' +
-        'davdepthinfinity davgenericlockdb davlockdb davmintimeout dbdexptime dbdkeep ' +
-        'dbdmax dbdmin dbdparams dbdpersist dbdpreparesql dbdriver defaulticon ' +
-        'defaultlanguage defaulttype deflatebuffersize deflatecompressionlevel ' +
-        'deflatefilternote deflatememlevel deflatewindowsize deny directoryindex ' +
-        'directorymatch directoryslash documentroot dumpioinput dumpiologlevel dumpiooutput ' +
-        'enableexceptionhook enablemmap enablesendfile errordocument errorlog example ' +
-        'expiresactive expiresbytype expiresdefault extendedstatus extfilterdefine ' +
-        'extfilteroptions fileetag filterchain filterdeclare filterprotocol filterprovider ' +
-        'filtertrace forcelanguagepriority forcetype forensiclog gracefulshutdowntimeout ' +
-        'group header headername hostnamelookups identitycheck identitychecktimeout ' +
-        'imapbase imapdefault imapmenu include indexheadinsert indexignore indexoptions ' +
-        'indexorderdefault indexstylesheet isapiappendlogtoerrors isapiappendlogtoquery ' +
-        'isapicachefile isapifakeasync isapilognotsupported isapireadaheadbuffer keepalive ' +
-        'keepalivetimeout languagepriority ldapcacheentries ldapcachettl ' +
-        'ldapconnectiontimeout ldapopcacheentries ldapopcachettl ldapsharedcachefile ' +
-        'ldapsharedcachesize ldaptrustedclientcert ldaptrustedglobalcert ldaptrustedmode ' +
-        'ldapverifyservercert limitinternalrecursion limitrequestbody limitrequestfields ' +
-        'limitrequestfieldsize limitrequestline limitxmlrequestbody listen listenbacklog ' +
-        'loadfile loadmodule lockfile logformat loglevel maxclients maxkeepaliverequests ' +
-        'maxmemfree maxrequestsperchild maxrequestsperthread maxspareservers maxsparethreads ' +
-        'maxthreads mcachemaxobjectcount mcachemaxobjectsize mcachemaxstreamingbuffer ' +
-        'mcacheminobjectsize mcacheremovalalgorithm mcachesize metadir metafiles metasuffix ' +
-        'mimemagicfile minspareservers minsparethreads mmapfile mod_gzip_on ' +
-        'mod_gzip_add_header_count mod_gzip_keep_workfiles mod_gzip_dechunk ' +
-        'mod_gzip_min_http mod_gzip_minimum_file_size mod_gzip_maximum_file_size ' +
-        'mod_gzip_maximum_inmem_size mod_gzip_temp_dir mod_gzip_item_include ' +
-        'mod_gzip_item_exclude mod_gzip_command_version mod_gzip_can_negotiate ' +
-        'mod_gzip_handle_methods mod_gzip_static_suffix mod_gzip_send_vary ' +
-        'mod_gzip_update_static modmimeusepathinfo multiviewsmatch namevirtualhost noproxy ' +
-        'nwssltrustedcerts nwsslupgradeable options order passenv pidfile protocolecho ' +
-        'proxybadheader proxyblock proxydomain proxyerroroverride proxyftpdircharset ' +
-        'proxyiobuffersize proxymaxforwards proxypass proxypassinterpolateenv ' +
-        'proxypassmatch proxypassreverse proxypassreversecookiedomain ' +
-        'proxypassreversecookiepath proxypreservehost proxyreceivebuffersize proxyremote ' +
-        'proxyremotematch proxyrequests proxyset proxystatus proxytimeout proxyvia ' +
-        'readmename receivebuffersize redirect redirectmatch redirectpermanent ' +
-        'redirecttemp removecharset removeencoding removehandler removeinputfilter ' +
-        'removelanguage removeoutputfilter removetype requestheader require rewritebase ' +
-        'rewritecond rewriteengine rewritelock rewritelog rewriteloglevel rewritemap ' +
-        'rewriteoptions rewriterule rlimitcpu rlimitmem rlimitnproc satisfy scoreboardfile ' +
-        'script scriptalias scriptaliasmatch scriptinterpretersource scriptlog ' +
-        'scriptlogbuffer scriptloglength scriptsock securelisten seerequesttail ' +
-        'sendbuffersize serveradmin serveralias serverlimit servername serverpath ' +
-        'serverroot serversignature servertokens setenv setenvif setenvifnocase sethandler ' +
-        'setinputfilter setoutputfilter ssienableaccess ssiendtag ssierrormsg ssistarttag ' +
-        'ssitimeformat ssiundefinedecho sslcacertificatefile sslcacertificatepath ' +
-        'sslcadnrequestfile sslcadnrequestpath sslcarevocationfile sslcarevocationpath ' +
-        'sslcertificatechainfile sslcertificatefile sslcertificatekeyfile sslciphersuite ' +
-        'sslcryptodevice sslengine sslhonorciperorder sslmutex ssloptions ' +
-        'sslpassphrasedialog sslprotocol sslproxycacertificatefile ' +
-        'sslproxycacertificatepath sslproxycarevocationfile sslproxycarevocationpath ' +
-        'sslproxyciphersuite sslproxyengine sslproxymachinecertificatefile ' +
-        'sslproxymachinecertificatepath sslproxyprotocol sslproxyverify ' +
-        'sslproxyverifydepth sslrandomseed sslrequire sslrequiressl sslsessioncache ' +
-        'sslsessioncachetimeout sslusername sslverifyclient sslverifydepth startservers ' +
-        'startthreads substitute suexecusergroup threadlimit threadsperchild ' +
-        'threadstacksize timeout traceenable transferlog typesconfig unsetenv ' +
-        'usecanonicalname usecanonicalphysicalport user userdir virtualdocumentroot ' +
-        'virtualdocumentrootip virtualscriptalias virtualscriptaliasip ' +
-        'win32disableacceptex xbithack',
-      literal: 'on off'
-    },
-    contains: [
-      hljs.HASH_COMMENT_MODE,
-      {
-        className: 'sqbracket',
-        begin: '\\s\\[', end: '\\]$'
-      },
-      {
-        className: 'cbracket',
-        begin: '[\\$%]\\{', end: '\\}',
-        contains: ['self', NUMBER]
-      },
-      NUMBER,
-      {className: 'tag', begin: '</?', end: '>'},
-      hljs.QUOTE_STRING_MODE
-    ]
-  };
-}(hljs);
 hljs.LANGUAGES['nginx'] = function(hljs) {
   var VARS = [
     {
@@ -1090,7 +982,9 @@ hljs.LANGUAGES['nginx'] = function(hljs) {
     keywords: {
       built_in:
         'on off yes no true false none blocked debug info notice warn error crit ' +
-        'select break last permanent redirect kqueue rtsig epoll poll /dev/poll'
+        'select break last permanent redirect kqueue rtsig epoll poll /dev/poll ' +
+        'server listen index location fastcgi_pass fastcgi_index fastcgi_params rewrite ' +
+        'if break server_name index root'
     },
     relevance: 0,
     illegal: '=>',
@@ -1167,87 +1061,6 @@ hljs.LANGUAGES['nginx'] = function(hljs) {
     illegal: '[^\\s\\}]'
   };
 }(hljs);
-hljs.LANGUAGES['http'] = function(hljs) {
-  return {
-    illegal: '\\S',
-    contains: [
-      {
-        className: 'status',
-        begin: '^HTTP/[0-9\\.]+', end: '$',
-        contains: [{className: 'number', begin: '\\b\\d{3}\\b'}]
-      },
-      {
-        className: 'request',
-        begin: '^[A-Z]+ (.*?) HTTP/[0-9\\.]+$', returnBegin: true, end: '$',
-        contains: [
-          {
-            className: 'string',
-            begin: ' ', end: ' ',
-            excludeBegin: true, excludeEnd: true
-          }
-        ]
-      },
-      {
-        className: 'attribute',
-        begin: '^\\w', end: ': ', excludeEnd: true,
-        illegal: '\\n|\\s|=',
-        starts: {className: 'string', end: '$'}
-      },
-      {
-        begin: '\\n\\n',
-        starts: {subLanguage: '', endsWithParent: true}
-      }
-    ]
-  };
-}(hljs);
-hljs.LANGUAGES['cpp'] = function(hljs) {
-  var CPP_KEYWORDS = {
-    keyword: 'false int float while private char catch export virtual operator sizeof ' +
-      'dynamic_cast|10 typedef const_cast|10 const struct for static_cast|10 union namespace ' +
-      'unsigned long throw volatile static protected bool template mutable if public friend ' +
-      'do return goto auto void enum else break new extern using true class asm case typeid ' +
-      'short reinterpret_cast|10 default double register explicit signed typename try this ' +
-      'switch continue wchar_t inline delete alignof char16_t char32_t constexpr decltype ' +
-      'noexcept nullptr static_assert thread_local restrict _Bool complex',
-    built_in: 'std string cin cout cerr clog stringstream istringstream ostringstream ' +
-      'auto_ptr deque list queue stack vector map set bitset multiset multimap unordered_set ' +
-      'unordered_map unordered_multiset unordered_multimap array shared_ptr'
-  };
-  return {
-    keywords: CPP_KEYWORDS,
-    illegal: '</',
-    contains: [
-      hljs.C_LINE_COMMENT_MODE,
-      hljs.C_BLOCK_COMMENT_MODE,
-      hljs.QUOTE_STRING_MODE,
-      {
-        className: 'string',
-        begin: '\'\\\\?.', end: '\'',
-        illegal: '.'
-      },
-      {
-        className: 'number',
-        begin: '\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)'
-      },
-      hljs.C_NUMBER_MODE,
-      {
-        className: 'preprocessor',
-        begin: '#', end: '$',
-        contains: [
-          {begin: '<', end: '>', illegal: '\\n'},
-          hljs.C_LINE_COMMENT_MODE
-        ]
-      },
-      {
-        className: 'stl_container',
-        begin: '\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<', end: '>',
-        keywords: CPP_KEYWORDS,
-        relevance: 10,
-        contains: ['self']
-      }
-    ]
-  };
-}(hljs);
 hljs.LANGUAGES['bash'] = function(hljs) {
   var VAR1 = {
     className: 'variable', begin: /\$[\w\d#@][\w\d_]*/
@@ -1281,12 +1094,13 @@ hljs.LANGUAGES['bash'] = function(hljs) {
     keywords: {
       keyword:
         'if then else elif fi for break continue while in do done exit return set '+
-        'declare case esac export exec',
+        'declare case esac export exec chown chmpd touch service sudo ' +
+        'apt-get usermod ssh-keygen ssh-copy-id ssh useradd passwd adduser nano vi vim',
       literal:
         'true false',
       built_in:
         'printf echo read cd pwd pushd popd dirs let eval unset typeset readonly '+
-        'getopts source shopt caller type hash bind help sudo',
+        'getopts source shopt caller type hash bind help',
       operator:
         '-ne -eq -lt -gt -f -d -e -s -l -a' // relevance booster
     },
