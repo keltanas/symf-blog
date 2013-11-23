@@ -1,0 +1,15 @@
+keltanas_page_homepage:
+    pattern:  /
+    defaults: { _controller: keltanasPageBundle:Default:index }
+
+keltanas_page_about:
+    pattern:  /about
+    defaults: { _controller: keltanasPageBundle:Default:about }
+
+keltanas_page_tag:
+    pattern: /tag/{name}
+    defaults: { _controller: keltanasPageBundle:Tag:index }
+
+keltanas_page_post:
+    resource: "@keltanasPageBundle/Resources/config/routing/post.yml"
+    prefix:   /post

@@ -1,9 +1,9 @@
 keltanas_user:
-    resource: "@KeltanasUserBundle/Resources/config/routing.yml"
+    resource: "@keltanasUserBundle/Resources/config/routing.yml"
     prefix:   /
 
 keltanas_page:
-    resource: "@KeltanasPageBundle/Resources/config/routing.yml"
+    resource: "@keltanasPageBundle/Resources/config/routing.yml"
     prefix:   /
 
 fos_user_security:

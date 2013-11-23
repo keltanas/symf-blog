@@ -47,7 +47,7 @@
         <div class="navbar-inner">
             <div class="container">
                 <img class="brand" width="20" height="20" src="https://www.gravatar.com/avatar/{{ gravatar_hash }}.png">
-                {{ knp_menu_render('KeltanasPageBundle:Builder:mainMenu', {'nav_type': 'navbar'}) }}
+                {{ knp_menu_render('keltanasPageBundle:Builder:mainMenu', {'nav_type': 'navbar'}) }}
                 {# @link https://github.com/symfony/symfony-docs/issues/2078 #}
                 {% if app.user is not null and is_granted('ROLE_USER') %}
                 <ul class="nav pull-right">
@@ -89,7 +89,16 @@
                 </div>
                 <div class="span3">
 
-                    {{ render(controller('KeltanasPageBundle:Tag:tagsCloud')) }}
+                    <p>
+                        {% image '@keltanasPageBundle/Resources/public/img/firetroop.png' output='/img/firetroop.png' %}
+                        <a href="http://firetroop.ru?utm_source=ermin_ru&utm_medium=free&utm_campaign=right_col&utm_content=image">
+                            <img src="{{ asset_url }}" alt="Коммерческие услуги"/></a>
+                        {% endimage %}
+                        <p><a href="http://firetroop.ru?utm_source=ermin_ru&utm_medium=free&utm_campaign=right_col&utm_content=text">
+                            Создание сайтов и веб-приложений для малого и среднего бизнеса</a></p>
+                    </p>
+
+                    {{ render(controller('keltanasPageBundle:Tag:tagsCloud')) }}
 
                 </div>
             </div>
@@ -117,7 +126,7 @@
     </div>
 
     {#<script src="https://yandex.st/highlightjs/7.3/highlight.min.js"></script>#}
-    {% javascripts  '@KeltanasPageBundle/Resources/public/js/highlight.pack.js'
+    {% javascripts  '@keltanasPageBundle/Resources/public/js/highlight.pack.js'
                     filter='?yui_js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

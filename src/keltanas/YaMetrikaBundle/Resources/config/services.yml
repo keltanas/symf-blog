@@ -1,0 +1,9 @@
+parameters:
+    keltanas_ya_metrika.listener.class: keltanas\YaMetrikaBundle\EventListener\AddTrackingListener
+
+services:
+    keltanas_ya_metrika.listener.response:
+        class: %keltanas_ya_metrika.listener.class%
+        arguments: [@templating, %ya_tracking%, [], %kernel.debug%]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

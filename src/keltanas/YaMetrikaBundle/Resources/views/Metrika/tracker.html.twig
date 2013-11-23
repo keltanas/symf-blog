@@ -1,0 +1,42 @@
+{% if app.debug %}
+<!-- {{ config|json_encode|raw }} -->
+{% else %}
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter{{ ya_tracking }} = new Ya.Metrika({{ config|json_encode|raw }});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/{{ ya_tracking }}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<script>
+(function($, w, d){
+    $(w).on('load', function(){
+        $(d).on('yandex.hit', function (e, params) {
+            w.yaCounter{{ ya_tracking }} && params.url && w.yaCounter{{ ya_tracking }}.hit(params.url);
+        });
+        $(d).on('yandex.reachGoal', function (e, params) {
+            var target = params.target;
+            params = params.params || null;
+            w.yaCounter{{ ya_tracking }} && target && w.yaCounter{{ ya_tracking }}.reachGoal(target, params);
+        });
+    });
+})(jQuery, window, document);
+</script>
+{% endif %}

@@ -1,7 +1,0 @@
-parameters:
-#    keltanas_page.example.class: Keltanas\Bundle\PageBundle\Example
-
-services:
-#    keltanas_page.example:
-#        class: %keltanas_page.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

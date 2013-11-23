@@ -1,0 +1,7 @@
+parameters:
+#    keltanas_user.example.class: keltanas\UserBundle\Example
+
+services:
+#    keltanas_user.example:
+#        class: %keltanas_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
