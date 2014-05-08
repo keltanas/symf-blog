@@ -22,10 +22,10 @@
                 <td>{% if entity.updatedAt %}<small>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</small>{% endif %}</td>
                 <td>
                     <a href="{{ path('post_show', { 'id': entity.id }) }}" class="btn">
-                        <i class="icon icon-eye-open"></i>
+                        {{ icon('eye-open') }}
                     </a>
                     <a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn btn-warning">
-                        <i class="icon icon-white icon-pencil"></i>
+                        {{ icon('pencil') }}
                     </a>
                 </td>
             </tr>
@@ -36,6 +36,6 @@
     {{ knp_pagination_render(entities)|raw }}
 
     <a href="{{ path('post_new') }}" class="btn btn-primary">
-        <i class="icon icon-white icon-plus-sign"></i>
+        {{ icon('plus-sign') }}
     </a>
     {% endblock %}
