@@ -7,11 +7,13 @@ use Doctrine\ORM\OptimisticLockException;
 use keltanas\Common\Controller;
 use keltanas\PageBundle\Event\PostEvent;
 use keltanas\PageBundle\Repository\PostRepository;
+use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Knp\Component\Pager\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
 
 use keltanas\PageBundle\Entity\Post;
 use keltanas\PageBundle\Form\PostType;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -191,35 +193,47 @@ class PostController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $form->submit($request);
-
         $em = $this->getDoctrine()->getManager();
 
         /** @var Post $entity */
         $entity = $em->getRepository('keltanasPageBundle:Post')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
-
         if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             if ($entity->getAccount()->getId() !== $this->getUser()->getId()) {
                 throw new AccessDeniedException("Post belongs to another author");
             }
         }
 
-        if ($form->isValid()) {
-            $event = new PostEvent($em, $entity);
-            $this->getEventDispatcher()->dispatch(PostEvent::POST_REMOVE, $event);
-            $em->remove($entity);
-            $em->flush();
-            return $this->redirect($this->generateUrl('post'));
+        if ($request->isMethod('post')) {
+            $form->submit($request);
+            if ($form->isValid()) {
+                $event = new PostEvent($em, $entity);
+                $this->getEventDispatcher()->dispatch(PostEvent::POST_REMOVE, $event);
+                $em->remove($entity);
+                $em->flush();
+                return $this->redirect($this->generateUrl('post'));
+            }
         }
 
         return $this->render('keltanasPageBundle:Post:delete.html.twig', array(
             'entity' => $entity,
             'delete_form' => $form->createView(),
         ));
+    }
+
+    public function previewAction(Request $request, $id)
+    {
+//        $entity = $this->getEntityManager()->find('keltanasPageBundle:Post', $id);
+//        if (!$entity) {
+//            throw $this->createNotFoundException('Unable to find Post entity.');
+//        }
+        /** @var MarkdownParserInterface $markdown */
+        $markdown = $this->get('markdown.parser');
+        $html = $markdown->transformMarkdown(str_replace('[cut]', '', $request->request->get('content')));
+
+        return new Response($html);
     }
 
     /**

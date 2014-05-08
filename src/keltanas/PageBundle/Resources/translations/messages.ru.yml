@@ -5,6 +5,7 @@ Create: Создать
 Delete: Удалить
 Save: Сохранить
 
+Content md: Содержание в формате MarkDown
 Created at: Создано
 Updated at: Изменено
 Tags: Метки
@@ -12,6 +13,7 @@ Tag: Метка
 Tags cloud: Облако меток
 New post: Новый пост
 All posts: Все посты
+Really want to delete?: Действительно хотите удалить?
 
 Deleting: Удаление
 Post creation: Создание поста

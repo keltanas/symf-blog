@@ -2,6 +2,15 @@
 
 {% block title %}{{ "Post edit"|trans }} {{ entity.title }}{% endblock %}
 
+{% block javascripts %}
+    {% javascripts
+        '@keltanasPageBundle/Resources/public/js/jquery.form.js'
+        '@keltanasPageBundle/Resources/public/js/jquery.preview.js'
+        filter='?yui_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
 {% block body -%}
     <h1>{{ block('title') }}</h1>
 
@@ -11,16 +20,36 @@
         {{ form_widget(edit_form) }}
 
         <hr>
-        <button class="btn btn-small btn-success" type="submit">
+        <button class="btn btn-sm btn-success" type="submit">
             {{ "Save"|trans }}
         </button>
-        <a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn btn-small btn-danger">
-            {{ "Delete"|trans }}
-        </a>
-        <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-small">
+        <button class="btn btn-sm btn-info btn-preview" type="button" data-url="{{ path('post_preview', {'id': entity.id}) }}">
+            {{ "Preview"|trans }}
+        </button>
+        <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-default btn-sm">
             {{ "Back to homepage"|trans }}
         </a>
+        <a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn btn-sm btn-danger">
+            {{ "Delete"|trans }}
+        </a>
     </form>
+
+    <div class="modal fade" id="modal-preview">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ 'Preview'|trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Loading</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     {#<form action="{{ path('post_delete', { 'id': entity.id }) }}" method="post">#}
         {#<input type="hidden" name="_method" value="DELETE" />#}

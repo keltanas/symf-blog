@@ -5,6 +5,8 @@
 {{ "Draft"|trans }}{% endif %}
 {% endblock %}
 
+{% block keywords %}{{ entity.tags }}{% endblock %}
+
 {% block body -%}
 
     {% if 0 == entity.status %}
@@ -22,7 +24,6 @@
             {% if entity.tags %}
             <div class="pull-left">
                 {{ icon("tags") }} <small>{% for tag in entity.tagsArray %}{{ label(tag) }} {% endfor %}</small><br>
-                <a href="{{ path('keltanas_page_homepage') }}">&laquo; {{ "Back to homepage"|trans }}</a>
             </div>
             {% endif %}
             <div class="text-right">
@@ -36,11 +37,12 @@
                 </small>
             </div>
 
+            <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-default btn-sm">&laquo; {{ "Back to homepage"|trans }}</a>
             {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn btn-small btn-primary">
+            <a href="{{ path('post_edit', { 'id': entity.id }) }}" class="btn btn-sm btn-primary">
                 {{ "Edit"|trans }}
             </a>
-            <a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn btn-small btn-danger">
+            <a href="{{ path('post_delete', { 'id': entity.id }) }}" class="btn btn-sm btn-danger">
                 {{ "Delete"|trans }}
             </a>
             {% endif %}
