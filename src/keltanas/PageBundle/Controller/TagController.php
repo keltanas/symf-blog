@@ -6,8 +6,6 @@
 
 namespace keltanas\PageBundle\Controller;
 
-
-use keltanas\PageBundle\Entity\Tag;
 use keltanas\PageBundle\Repository\PostRepository;
 use keltanas\PageBundle\Repository\TagRepository;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;

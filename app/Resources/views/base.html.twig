@@ -1,72 +1,93 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head lang="{{ app.request.locale }}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title %}{{ "blog.title"|trans }}{% endblock %}</title>
-    <meta name="description" content="">
+    <meta name="description" content="{% block description %}Блог web-программиста{% endblock %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-
-    {% stylesheets  'bundles/keltanaspage/less/style.less'
-                    'bundles/keltanaspage/css/highlightjs/ir_black.css'
-                    filter='cssrewrite' filter="less" filter='?yui_css' output="css/style.css" %}
+    {% stylesheets
+        'bundles/keltanaspage/less/style.less'
+        'bundles/keltanaspage/css/highlightjs/ir_black.css'
+         filter="less" filter='cssrewrite' filter='?yui_css' output="css/style.css" %}
     <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
+
+    <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+    {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
 
     {# highlighter @link http://softwaremaniacs.org/soft/highlight/download/ #}
     {#<link rel="stylesheet" href="https://yandex.st/highlightjs/7.3/styles/ir_black.min.css">#}
     {% block stylesheets %}{% endblock %}
 
-    <!-- MICROFORMATS FOR GPLUS -->
+    {#MICROFORMATS FOR GPLUS#}
     <link href="https://plus.google.com/{{ google_plus_id }}" rel="publisher" />
-    <meta itemprop="name" content="{{ block('title') }}">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="https://www.gravatar.com/avatar/{{ gravatar_hash }}.png">
+
+    <meta property="og:type" content="blog" />
+    <meta property="og:title" content="{{ block('title')|striptags }}" />
+    <meta property="og:url" content="{{ app.request.schemeAndHttpHost }}{{ app.request.requestUri }}" />
+    <meta property="og:description" content="{{ block('description') }}" />
+    <meta property="og:image" content="{{ asset('apple-touch-icon-152x152.png') }}" />
 
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-touch-icon-57x57.png') }}" />
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('apple-touch-icon-72x72.png') }}" />
     <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('apple-touch-icon-114x114.png') }}" />
     <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('apple-touch-icon-144x144.png') }}" />
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-touch-icon-60x60.png') }}" />
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('apple-touch-icon-120x120.png') }}" />
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('apple-touch-icon-76x76.png') }}" />
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('apple-touch-icon-152x152.png') }}" />
+    <meta name="msapplication-square70x70logo" content="{{ asset('smalltile.png') }}" />
+    <meta name="msapplication-square150x150logo" content="{{ asset('mediumtile.png') }}" />
+    <meta name="msapplication-wide310x150logo" content="{{ asset('widetile.png') }}" />
+    <meta name="msapplication-square310x310logo" content="{{ asset('largetile.png') }}" />
 </head>
 <body>
     <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-
     {# HEADER #}
 
     <div class="navbar navbar-static-top navbar-inverse">
         <div class="navbar-inner">
             <div class="container">
-                <img class="brand" width="20" height="20" src="https://www.gravatar.com/avatar/{{ gravatar_hash }}.png">
-                {{ knp_menu_render('keltanasPageBundle:Builder:mainMenu', {'nav_type': 'navbar'}) }}
-                {# @link https://github.com/symfony/symfony-docs/issues/2078 #}
-                {% if app.user is not null and is_granted('ROLE_USER') %}
-                <ul class="nav pull-right">
-                    <li>
-                        <a href="{{ path('post_new') }}">
-                            <span class="icon icon-white icon-plus-sign"></span> {{ "New post"|trans }}</a>
-                    </li>
-                    <li><a href="{{ path('post') }}">{{ "All posts"|trans }}</a></li>
-                    <li class="divider-vertical"></li>
-                    <li><a href="{{ path("fos_user_profile_show") }}">
-                            <i class="icon icon-white icon-user"></i> {{ app.user.username }}</a></li>
-                    <li class="divider-vertical"></li>
-                    <li><a href="{{ path('fos_user_security_logout') }}">{{ "Logout"|trans }}</a></li>
-                </ul>
-                {% else %}
-                <ul class="nav pull-right">
-                    <li><a href="{{ path('fos_user_security_login') }}">{{ "Login"|trans }}</a></li>
-                </ul>
-                {% endif %}
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-blog-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        <img class="brand" width="20" height="20" src="{{ asset('apple-touch-icon.png') }}">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-blog-navbar-collapse-1">
+                    {{ knp_menu_render('keltanasPageBundle:Builder:mainMenu', {'style': 'navbar'}) }}
+                    {# @link https://github.com/symfony/symfony-docs/issues/2078 #}
+                    {% if app.user is not null and is_granted('ROLE_USER') %}
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="{{ path('post_new') }}">
+                                    <span class="icon icon-white icon-plus-sign"></span> {{ "New post"|trans }}</a>
+                            </li>
+                            <li><a href="{{ path('post') }}">{{ "All posts"|trans }}</a></li>
+                            <li class="divider-vertical"></li>
+                            <li><a href="{{ path("fos_user_profile_show") }}">
+                                    <i class="icon icon-white icon-user"></i> {{ app.user.username }}</a></li>
+                            <li class="divider-vertical"></li>
+                            <li><a href="{{ path('fos_user_security_logout') }}">{{ "Logout"|trans }}</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="{{ path('fos_user_security_login') }}">{{ "Login"|trans }}</a></li>
+                        </ul>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -75,8 +96,8 @@
 
     <div class="container">
         <div id="content">
-            <div class="row-fluid">
-                <div class="span9">
+            <div class="row">
+                <div class="col-md-9">
                     {% for type, messages in app.session.flashbag.all() %}
                     <ul class="alert alert-{{ type }}">
                         {% for key, message in messages %}
@@ -87,18 +108,20 @@
 
                     {% block body %}{% endblock %}
                 </div>
-                <div class="span3">
+                <div class="col-md-3">
 
                     <p>
-                        {% image '@keltanasPageBundle/Resources/public/img/firetroop.png' output='/img/firetroop.png' %}
+                        {% image '@keltanasPageBundle/Resources/public/img/firetroop.png' output='img/firetroop.png' %}
                         <a href="http://firetroop.ru?utm_source=ermin_ru&utm_medium=free&utm_campaign=right_col&utm_content=image">
                             <img src="{{ asset_url }}" alt="Коммерческие услуги"/></a>
                         {% endimage %}
                         <p><a href="http://firetroop.ru?utm_source=ermin_ru&utm_medium=free&utm_campaign=right_col&utm_content=text">
-                            Создание сайтов и веб-приложений для малого и среднего бизнеса</a></p>
+                            Создание сайтов и веб-приложений для малого и среднего бизнеса</a>
                     </p>
 
                     {{ render(controller('keltanasPageBundle:Tag:tagsCloud')) }}
+
+                    <a href="https://www.reg.ru/domain/new/?rid=293253" target="_blank"><img src="https://www.reg.ru/i/affiliate/domain_240x400.gif" width="240" height="400" border="0" alt="Домены"></a>
 
                 </div>
             </div>
@@ -110,12 +133,12 @@
     <div class="navbar navbar-fixed-bottom navbar-inverse">
         <div class="navbar-inner">
             <div class="container">
-                <ul class="nav">
+                <ul class="nav navbar-nav">
                     <li>
-                        <span class="brand"><small>&copy; Nikolay Ermin aka KelTanas {{ "now"|date('Y') }}</small></span>
+                        <span class="navbar-brand"><small>&copy; Nikolay Ermin aka KelTanas {{ "now"|date('Y') }}</small></span>
                     </li>
                 </ul>
-                <ul class="nav pull-right">
+                <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="https://github.com/keltanas/symf-blog" target="_blank">
                             <i class="github-icon"></i>On Github</a>
@@ -125,9 +148,9 @@
         </div>
     </div>
 
+    <script type="text/javascript" src="{{ asset('js/vendor.js') }}"></script>
     {#<script src="https://yandex.st/highlightjs/7.3/highlight.min.js"></script>#}
-    {% javascripts  '@keltanasPageBundle/Resources/public/js/highlight.pack.js'
-                    filter='?yui_js' %}
+    {% javascripts  '@keltanasPageBundle/Resources/public/js/highlight.pack.js' filter='?yui_js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <script>hljs.initHighlightingOnLoad();</script>

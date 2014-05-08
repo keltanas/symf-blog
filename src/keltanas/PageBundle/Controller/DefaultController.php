@@ -70,7 +70,7 @@ class DefaultController extends Controller
     /**
      * @return Paginator
      */
-    public function getKnpPaginator()
+    private function getKnpPaginator()
     {
         return $this->get('knp_paginator');
     }
@@ -78,7 +78,7 @@ class DefaultController extends Controller
     /**
      * @return \Doctrine\Common\Persistence\ObjectManager
      */
-    public function getEntityManager()
+    private function getEntityManager()
     {
         return $this->getDoctrine()->getManager();
     }

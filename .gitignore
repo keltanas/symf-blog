@@ -5,11 +5,12 @@ app/bootstrap*
 vendor/*
 */logs/*
 */cache/*
-web/uploads/*
-web/bundles/*
-web/img/*
-web/css/*
-web/js/*
+web/uploads
+web/bundles
+web/fonts
+web/img
+web/css
+web/js
 app/SymfonyRequirements.php
 
 # Configuration files

@@ -21,7 +21,7 @@
             <hr>
             {% if entity.tags %}
             <div class="pull-left">
-                {{ "tags"|icon }} <small>{% for tag in entity.tagsArray %}{{ tag|label }} {% endfor %}</small><br>
+                {{ icon("tags") }} <small>{% for tag in entity.tagsArray %}{{ label(tag) }} {% endfor %}</small><br>
                 <a href="{{ path('keltanas_page_homepage') }}">&laquo; {{ "Back to homepage"|trans }}</a>
             </div>
             {% endif %}
