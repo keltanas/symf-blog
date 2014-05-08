@@ -3,10 +3,7 @@
 {% block title %}{{ "Post edit"|trans }} {{ entity.title }}{% endblock %}
 
 {% block javascripts %}
-    {% javascripts
-        '@keltanasPageBundle/Resources/public/js/jquery.form.js'
-        '@keltanasPageBundle/Resources/public/js/jquery.preview.js'
-        filter='?yui_js' %}
+    {% javascripts '@keltanasPageBundle/Resources/public/js/jquery.preview.js' filter='?yui_js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
@@ -23,7 +20,7 @@
         <button class="btn btn-sm btn-success" type="submit">
             {{ "Save"|trans }}
         </button>
-        <button class="btn btn-sm btn-info btn-preview" type="button" data-url="{{ path('post_preview', {'id': entity.id}) }}">
+        <button class="btn btn-sm btn-info btn-preview" type="button" data-url="{{ path('post_preview') }}">
             {{ "Preview"|trans }}
         </button>
         <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-default btn-sm">
@@ -34,26 +31,6 @@
         </a>
     </form>
 
-    <div class="modal fade" id="modal-preview">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{ 'Preview'|trans }}</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Loading</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    {% include('keltanasPageBundle:Post:_modal.html.twig') %}
 
-    {#<form action="{{ path('post_delete', { 'id': entity.id }) }}" method="post">#}
-        {#<input type="hidden" name="_method" value="DELETE" />#}
-        {#{{ form_widget(delete_form) }}#}
-        {#<button type="submit" class="btn btn-small btn-danger">Delete</button>#}
-    {#</form>#}
 {% endblock %}

@@ -223,7 +223,7 @@ class PostController extends Controller
         ));
     }
 
-    public function previewAction(Request $request, $id)
+    public function previewAction(Request $request)
     {
 //        $entity = $this->getEntityManager()->find('keltanasPageBundle:Post', $id);
 //        if (!$entity) {

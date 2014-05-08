@@ -32,6 +32,6 @@ post_create:
     requirements: { _method: post }
 
 post_preview:
-    pattern: /preview/{id}
+    pattern: /preview
     defaults: { _controller: "keltanasPageBundle:Post:preview" }
     requirements: { _method: post }
