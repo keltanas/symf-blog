@@ -16,6 +16,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Post extends ContainerAware
 {
+    const STATUS_DRAFT = 0;
+    const STATUS_PUBLIC = 1;
+
     /**
      * @var integer
      *
@@ -250,11 +253,15 @@ class Post extends ContainerAware
     }
 
     /**
+     * @param string $tags
      * @return array
      */
-    public function getTagsArray()
+    public function getTagsArray($tags = null)
     {
-        return preg_split('/\s*,\s*/',trim($this->getTags()),-1,PREG_SPLIT_NO_EMPTY);
+        if (null === $tags) {
+            $tags = $this->getTags();
+        }
+        return preg_split('/\s*,\s*/',trim($tags),-1,PREG_SPLIT_NO_EMPTY);
     }
 
 

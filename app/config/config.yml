@@ -167,3 +167,5 @@ keltanas_yandex_metrika:
     trackHash: true
     trackLinks: true
     webvisor: true
+
+keltanas_page: ~

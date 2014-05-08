@@ -27,4 +27,36 @@ class PostRepository extends EntityRepository
         }
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    /**
+     * @param $tagName
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getQueryForPaginator($tagName = null, User $user = null)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.status = :status')
+            ->setParameter('status', 1)
+            ->orderBy('p.createdAt', 'desc')
+        ;
+
+        if (null !== $tagName) {
+            $qb
+                ->andWhere('p.tags LIKE :name')
+                ->setParameter('name', '%'.$tagName.'%')
+            ;
+        }
+
+        if (null !== $user) {
+            $qb->where('p.account = :user')->setParameter('user', $user->getId());
+        }
+
+        $query = $qb->getQuery();
+
+        $qb->select($qb->expr()->count('p'));
+        $count = $qb->getQuery()->getSingleScalarResult();
+        $query->setHint('knp_paginator.count', $count);
+        return $query;
+    }
 }

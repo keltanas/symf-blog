@@ -1,7 +1,11 @@
 parameters:
-#    keltanas_page.example.class: keltanas\PageBundle\Example
+    keltanas_page.tags_handler.subscriber.class: keltanas\PageBundle\EventListener\TagsHandlerSubscriber
 
 services:
-#    keltanas_page.example:
-#        class: %keltanas_page.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    keltanas_page.tags_handler.subscriber:
+        class: %keltanas_page.tags_handler.subscriber.class%
+        calls:
+            - ["setMarkdown", ["@markdown.parser"]]
+        tags:
+            - { name: kernel.event_subscriber }
+

@@ -2,10 +2,10 @@
 
 namespace keltanas\PageBundle\Controller;
 
+use keltanas\Common\Controller;
 use keltanas\PageBundle\Repository\PostRepository;
 use Knp\Component\Pager\Pagination\SlidingPagination;
-use Knp\Component\Pager\Paginator;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class DefaultController extends Controller
@@ -13,28 +13,22 @@ class DefaultController extends Controller
     /**
      * @Template()
      *
+     * @param Request $request
+     *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getEntityManager();
-        /** @var PostRepository $rep */
-        $rep = $em->getRepository('keltanasPageBundle:Post');
+        /** @var PostRepository $repository */
+        $repository = $em->getRepository('keltanasPageBundle:Post');
 
         $paginator = $this->getKnpPaginator();
-        $query = $rep->createQueryBuilder('p')
-            ->where('p.status = :status')
-            ->setParameter('status', 1)
-            ->orderBy('p.createdAt', 'desc')
-            ->getQuery();
-        $count = $rep->getCount();
-
-        $query->setHint('knp_paginator.count', $count);
 
         /** @var $pagination SlidingPagination */
         $entities = $paginator->paginate(
-            $query,
-            $this->getRequest()->query->getInt('page', 1),
+            $repository->getQueryForPaginator(),
+            $request->query->getInt('page', 1),
             10
         );
 
@@ -61,25 +55,5 @@ class DefaultController extends Controller
     public function portfolioAction()
     {
         return [];
-    }
-
-
-
-
-
-    /**
-     * @return Paginator
-     */
-    private function getKnpPaginator()
-    {
-        return $this->get('knp_paginator');
-    }
-
-    /**
-     * @return \Doctrine\Common\Persistence\ObjectManager
-     */
-    private function getEntityManager()
-    {
-        return $this->getDoctrine()->getManager();
     }
 }
