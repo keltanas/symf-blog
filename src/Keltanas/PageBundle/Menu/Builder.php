@@ -16,7 +16,7 @@ class Builder extends ContainerAware
     {
         $menu = $factory->createItem('root');
 
-        $menu->addChild($this->trans('Home'), [
+        $menu->addChild($this->trans('Blog'), [
                 'route' => 'keltanas_page_homepage'
             ]);
 //        $menu->addChild('Portfolio', [
