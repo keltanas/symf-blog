@@ -151,12 +151,6 @@ knp_markdown:
             hard_wrap:            false
             xhtml:                false
 
-services:
-    dbal.session_init.listener:
-        class: Doctrine\DBAL\Event\Listeners\MysqlSessionInit
-        tags:
-            - { name: doctrine.event_listener, event: postConnect }
-
 keltanas_yandex_metrika:
     debug:  "%kernel.debug%"
     number: "%ya_tracking%"

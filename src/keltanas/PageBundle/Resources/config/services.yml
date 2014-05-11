@@ -2,6 +2,11 @@ parameters:
     keltanas_page.tags_handler.subscriber.class: keltanas\PageBundle\EventListener\TagsHandlerSubscriber
 
 services:
+    dbal.session_init.listener:
+        class: Doctrine\DBAL\Event\Listeners\MysqlSessionInit
+        tags:
+            - { name: doctrine.event_listener, event: postConnect }
+
     keltanas_page.tags_handler.subscriber:
         class: %keltanas_page.tags_handler.subscriber.class%
         calls:

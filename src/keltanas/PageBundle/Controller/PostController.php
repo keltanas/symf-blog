@@ -15,6 +15,7 @@ use keltanas\PageBundle\Entity\Post;
 use keltanas\PageBundle\Form\PostType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Post controller.
@@ -23,6 +24,8 @@ class PostController extends Controller
 {
     /**
      * Lists all Post entities.
+     *
+     * @Template()
      */
     public function indexAction(Request $request)
     {
@@ -32,10 +35,7 @@ class PostController extends Controller
 
         $paginator = $this->getKnpPaginator();
 
-        $user = null;
-        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            $user = $this->getUser();
-        }
+        $user = $this->isGranted('ROLE_ADMIN') ? null : $this->getUser();
 
         $query = $repository->getQueryForPaginator(null, $user);
 
@@ -46,14 +46,15 @@ class PostController extends Controller
             20
         );
 
-        return $this->render('keltanasPageBundle:Post:index.html.twig', array(
+        return [
             'entities' => $entities,
-        ));
+        ];
     }
 
     /**
      * Creates a new Post entity.
      *
+     * @Template("keltanasPageBundle:Post:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -62,25 +63,21 @@ class PostController extends Controller
         $form->submit($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $this->getEntityManager()->persist($entity);
             $entity->setAccount($this->getUser());
-            $event = new PostEvent($em, $entity);
-            $this->getEventDispatcher()->dispatch(PostEvent::POST_CREATE, $event);
-            $em->flush();
+            $this->getEventDispatcher()->dispatch(PostEvent::POST_CREATE, new PostEvent($this->getEntityManager(), $entity));
+            $this->getEntityManager()->flush();
 
-            return $this->redirect($this->generateUrl('post_show', array('id' => $entity->getId())));
+            return $this->redirectToPath('post_show', ['id' => $entity->getId()]);
         }
 
-        return $this->render('keltanasPageBundle:Post:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        return ['entity' => $entity, 'form' => $form->createView()];
     }
 
     /**
      * Displays a form to create a new Post entity.
      *
+     * @Template()
      */
     public function newAction()
     {
@@ -88,15 +85,16 @@ class PostController extends Controller
         $entity->setStatus(1);
         $form   = $this->createForm(new PostType(), $entity);
 
-        return $this->render('keltanasPageBundle:Post:new.html.twig', array(
+        return [
             'entity' => $entity,
             'form'   => $form->createView(),
-        ));
+        ];
     }
 
     /**
      * Finds and displays a Post entity.
      *
+     * @Template()
      */
     public function showAction($id)
     {
@@ -108,14 +106,14 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
-        return $this->render('keltanasPageBundle:Post:show.html.twig', array(
+        return [
             'entity'      => $entity,
-        ));
+        ];
     }
 
     /**
      * Displays a form to edit an existing Post entity.
-     *
+     * @Template()
      */
     public function editAction($id)
     {
@@ -136,99 +134,80 @@ class PostController extends Controller
 
         $editForm = $this->createForm(new PostType(), $entity);
 
-        return $this->render('keltanasPageBundle:Post:edit.html.twig', array(
+        return [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-        ));
+        ];
     }
 
     /**
      * Edits an existing Post entity.
      *
+     * @Template("keltanasPageBundle:Post:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /** @var Post $entity */
-        $entity = $em->getRepository('keltanasPageBundle:Post')->find($id);
+        $entity = $this->findOr404('keltanasPageBundle:Post', $id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Post entity.');
+        if (!$this->isGranted('ROLE_ADMIN') && ($entity->getAccount()->getId() !== $this->getUser()->getId())) {
+           throw new AccessDeniedException("Post belongs to another author");
         }
 
-        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            if ($entity->getAccount()->getId() !== $this->getUser()->getId()) {
-                throw new AccessDeniedException("Post belongs to another author");
-            }
-        }
-
-        $editForm = $this->createForm(new PostType(), $entity);
-        $editForm->submit($request);
+        $editForm = $this->createForm(new PostType(), $entity)->submit($request);
 
         try {
             if ($editForm->isValid()) {
-                $em->lock($entity, LockMode::OPTIMISTIC, $entity->getVersion());
-                $em->persist($entity);
-                $event = new PostEvent($em, $entity);
-                $this->getEventDispatcher()->dispatch(PostEvent::POST_UPDATE, $event);
-                $em->flush();
+                $this->getEntityManager()->lock($entity, LockMode::OPTIMISTIC, $entity->getVersion());
+                $this->getEntityManager()->persist($entity);
+                $this->getEventDispatcher()->dispatch(PostEvent::POST_UPDATE, new PostEvent($this->getEntityManager(), $entity));
+                $this->getEntityManager()->flush();
 
-                return $this->redirect($this->generateUrl('post_show', array('id' => $id)));
+                return $this->redirectToPath('post_show', ['id' => $id]);
             }
         } catch(OptimisticLockException $e) {
-            $this->getFlashBag()
-                ->add('error', "Sorry, but someone else has already changed this entity. Please apply the changes again!");
+            $this->addFlash('error', 'Sorry, but someone else has already changed this entity. Please apply the changes again!');
         }
 
-        return $this->render('keltanasPageBundle:Post:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-        ));
+        return ['entity' => $entity, 'edit_form' => $editForm->createView()];
     }
 
     /**
      * Deletes a Post entity.
+     *
+     * @Template()
      */
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $em = $this->getDoctrine()->getManager();
 
         /** @var Post $entity */
-        $entity = $em->getRepository('keltanasPageBundle:Post')->find($id);
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Post entity.');
-        }
-        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            if ($entity->getAccount()->getId() !== $this->getUser()->getId()) {
-                throw new AccessDeniedException("Post belongs to another author");
-            }
+        $entity = $this->findOr404('keltanasPageBundle:Post', $id);
+        if (!$this->isGranted('ROLE_ADMIN') && ($entity->getAccount()->getId() !== $this->getUser()->getId())) {
+            throw new AccessDeniedException("Post belongs to another author");
         }
 
         if ($request->isMethod('post')) {
             $form->submit($request);
             if ($form->isValid()) {
-                $event = new PostEvent($em, $entity);
+                $event = new PostEvent($this->getEntityManager(), $entity);
                 $this->getEventDispatcher()->dispatch(PostEvent::POST_REMOVE, $event);
-                $em->remove($entity);
-                $em->flush();
+                $this->getEntityManager()->remove($entity);
+                $this->getEntityManager()->flush();
                 return $this->redirect($this->generateUrl('post'));
             }
         }
 
-        return $this->render('keltanasPageBundle:Post:delete.html.twig', array(
-            'entity' => $entity,
-            'delete_form' => $form->createView(),
-        ));
+        return ['entity' => $entity, 'delete_form' => $form->createView()];
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function previewAction(Request $request)
     {
-//        $entity = $this->getEntityManager()->find('keltanasPageBundle:Post', $id);
-//        if (!$entity) {
-//            throw $this->createNotFoundException('Unable to find Post entity.');
-//        }
         /** @var MarkdownParserInterface $markdown */
         $markdown = $this->get('markdown.parser');
         $html = $markdown->transformMarkdown(str_replace('[cut]', '', $request->request->get('content')));
