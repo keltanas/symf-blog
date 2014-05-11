@@ -12,7 +12,7 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            d9823hf9q08ohfqyhf982gefp9q8g2f9p9
 
     gravatar_hash: ~
     google_analytics: ~
