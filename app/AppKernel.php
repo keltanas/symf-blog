@@ -27,8 +27,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
 
-            new keltanas\PageBundle\keltanasPageBundle(),
-            new keltanas\UserBundle\keltanasUserBundle(),
+            new Keltanas\PageBundle\KeltanasPageBundle(),
+            new Keltanas\UserBundle\KeltanasUserBundle(),
             new keltanas\Bundle\YandexMetrikaBundle\keltanasYandexMetrikaBundle(),
         );
 

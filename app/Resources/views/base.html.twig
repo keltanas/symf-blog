@@ -68,7 +68,7 @@
                     </a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-blog-navbar-collapse-1">
-                    {{ knp_menu_render('keltanasPageBundle:Builder:mainMenu', {'style': 'navbar'}) }}
+                    {{ knp_menu_render('KeltanasPageBundle:Builder:mainMenu', {'style': 'navbar'}) }}
                     {# @link https://github.com/symfony/symfony-docs/issues/2078 #}
                     {% if app.user is not null and is_granted('ROLE_USER') %}
                         <ul class="nav navbar-nav navbar-right">
@@ -112,7 +112,7 @@
                 <div class="col-md-3">
 
                     <p>
-                        {% image '@keltanasPageBundle/Resources/public/img/firetroop.png' output='img/firetroop.png' %}
+                        {% image '@KeltanasPageBundle/Resources/public/img/firetroop.png' output='img/firetroop.png' %}
                         <a href="http://firetroop.ru?utm_source=ermin_ru&utm_medium=free&utm_campaign=right_col&utm_content=image">
                             <img src="{{ asset_url }}" alt="Коммерческие услуги"/></a>
                         {% endimage %}
@@ -120,7 +120,7 @@
                             Создание сайтов и веб-приложений для малого и среднего бизнеса</a>
                     </p>
 
-                    {{ render(controller('keltanasPageBundle:Tag:tagsCloud')) }}
+                    {{ render(controller('KeltanasPageBundle:Tag:tagsCloud')) }}
 
                     <a href="https://www.reg.ru/domain/new/?rid=293253" target="_blank"><img src="https://www.reg.ru/i/affiliate/domain_240x400.gif" width="240" height="400" border="0" alt="Домены"></a>
 
@@ -151,7 +151,7 @@
 
     <script type="text/javascript" src="{{ asset('js/vendor.js') }}"></script>
     {#<script src="https://yandex.st/highlightjs/7.3/highlight.min.js"></script>#}
-    {% javascripts  '@keltanasPageBundle/Resources/public/js/highlight.pack.js' filter='?yui_js' %}
+    {% javascripts  '@KeltanasPageBundle/Resources/public/js/highlight.pack.js' filter='?yui_js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <script>hljs.initHighlightingOnLoad();</script>

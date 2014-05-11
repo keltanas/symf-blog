@@ -40,7 +40,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ "keltanasPageBundle" ]
+    bundles:        [ "KeltanasPageBundle" ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -116,7 +116,7 @@ swiftmailer:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: keltanas\UserBundle\Entity\User
+    user_class: Keltanas\UserBundle\Entity\User
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control

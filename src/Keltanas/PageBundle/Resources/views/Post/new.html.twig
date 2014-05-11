@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ "Post creation"|trans }}{% endblock %}
+
+{% block javascripts %}
+    {% javascripts '@KeltanasPageBundle/Resources/public/js/jquery.preview.js' filter='?yui_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block body -%}
+    <h1>{{ block('title') }}</h1>
+
+    <form action="{{ path('post_create') }}" method="post"
+          novalidate="novalidate" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit" class="btn btn-sm btn-success">{{ "Create"|trans }}</button>
+            <button class="btn btn-sm btn-info btn-preview" type="button" data-url="{{ path('post_preview') }}">
+                {{ "Preview"|trans }}
+            </button>
+            <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-sm btn-default">
+                {{ "Back to homepage"|trans }}
+            </a>
+        </p>
+    </form>
+
+    {% include('KeltanasPageBundle:Post:_modal.html.twig') %}
+{% endblock %}
