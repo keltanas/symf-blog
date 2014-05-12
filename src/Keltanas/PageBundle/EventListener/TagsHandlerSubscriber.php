@@ -13,7 +13,6 @@ use Keltanas\PageBundle\Entity\Post;
 use Keltanas\PageBundle\Entity\Tag;
 use Keltanas\PageBundle\Event\PostEvent;
 use Keltanas\PageBundle\Repository\TagRepository;
-use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TagsHandlerSubscriber implements EventSubscriberInterface
