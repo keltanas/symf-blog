@@ -1,18 +1,12 @@
 parameters:
     keltanas_page.tags_handler.subscriber.class: Keltanas\PageBundle\EventListener\TagsHandlerSubscriber
+    keltanas_page.markdown_handler.listener.class: Keltanas\PageBundle\EventListener\MarkdownHandlerListener
 
 services:
     dbal.session_init.listener:
         class: Doctrine\DBAL\Event\Listeners\MysqlSessionInit
         tags:
             - { name: doctrine.event_listener, event: postConnect }
-
-    keltanas_page.tags_handler.subscriber:
-        class: %keltanas_page.tags_handler.subscriber.class%
-        calls:
-            - ["setMarkdown", ["@markdown.parser"]]
-        tags:
-            - { name: kernel.event_subscriber }
 
     session.memcached:
         class: Memcached
@@ -22,4 +16,17 @@ services:
     session.handler.memcached:
         class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
         arguments: [ @session.memcached, { prefix: %session_memcached_prefix%, expiretime: %session_memcached_expire% } ]
+
+    keltanas_page.tags_handler.subscriber:
+        class: %keltanas_page.tags_handler.subscriber.class%
+        tags:
+            - { name: kernel.event_subscriber }
+
+    keltanas_page.markdown_handler.listener:
+        class: %keltanas_page.markdown_handler.listener.class%
+        calls:
+            - ["setMarkdown", ["@markdown.parser"]]
+        tags:
+            - { name: kernel.event_listener, event: entity.post.create, method: onPostModify }
+            - { name: kernel.event_listener, event: entity.post.update, method: onPostModify }
 

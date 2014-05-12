@@ -18,27 +18,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TagsHandlerSubscriber implements EventSubscriberInterface
 {
-    /** @var  MarkdownParserInterface */
-    private $markdown;
-
     /** @var EntityManager */
     private $em;
-
-    /**
-     * @param \Knp\Bundle\MarkdownBundle\MarkdownParserInterface $markdown
-     */
-    public function setMarkdown($markdown)
-    {
-        $this->markdown = $markdown;
-    }
-
-    /**
-     * @return \Knp\Bundle\MarkdownBundle\MarkdownParserInterface
-     */
-    public function getMarkdown()
-    {
-        return $this->markdown;
-    }
 
     /**
      *
@@ -68,7 +49,6 @@ class TagsHandlerSubscriber implements EventSubscriberInterface
     public function onPostCreate(PostEvent $event)
     {
         $this->em = $event->getEntityManager();
-        $this->handleMarkdown($event->getEntity());
 
         if (Post::STATUS_PUBLIC == $event->getEntity()->getStatus()) {
             $this->addTags($event->getEntity()->getTagsArray());
@@ -81,8 +61,6 @@ class TagsHandlerSubscriber implements EventSubscriberInterface
 
         /** @var Post $entity */
         $entity = $event->getEntity();
-
-        $this->handleMarkdown($entity);
 
         $uow = $this->em->getUnitOfWork();
         $uow->computeChangeSet($this->em->getClassMetadata(get_class($entity)), $entity);
@@ -112,16 +90,6 @@ class TagsHandlerSubscriber implements EventSubscriberInterface
         } elseif (!$newStatus && $oldStatus) {
             $this->removeTags(array_values($oldTagsArray));
         }
-    }
-
-    private function handleMarkdown(Post $entity)
-    {
-        $entity->setContentCutedHtml(
-            $this->getMarkdown()->transformMarkdown(explode('[cut]', $entity->getContentMd())[0])
-        );
-        $entity->setContentHtml(
-            $this->getMarkdown()->transformMarkdown(str_replace('[cut]', '', $entity->getContentMd()))
-        );
     }
 
     /**
