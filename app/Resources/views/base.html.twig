@@ -30,6 +30,11 @@
     <meta property="og:description" content="{{ block('description') }}" />
     <meta property="og:image" content="{{ asset('apple-touch-icon-152x152.png') }}" />
 
+    <!-- Google+ Metadata /-->
+    <meta itemprop="name" content="{{ block('title')|striptags }}">
+    <meta itemprop="description" content="{{ block('description') }}">
+    <meta itemprop="image" content="{{ asset('apple-touch-icon-152x152.png') }}">
+
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
 
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
