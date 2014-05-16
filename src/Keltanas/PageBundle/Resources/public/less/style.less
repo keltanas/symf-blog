@@ -35,6 +35,16 @@ code, pre {
     margin: 20px auto 65px auto;
     .rounded-corners(20px);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+
+    .pluso {
+        position: absolute !important;
+        top: 0;
+        left: -50px;
+        @media (max-width: @screen-sm) {
+            .responsive-invisibility();
+        }
+    }
 
     h1, h2, h3 {
         font-family: "Georgia";
@@ -79,4 +89,3 @@ textarea {
         background: url("../img/GitHub-Mark-32px.png") no-repeat 0 0;
     }
 }
-

@@ -8,7 +8,6 @@
 
 namespace Keltanas\PageBundle\EventListener;
 
-
 use Keltanas\PageBundle\Entity\Post;
 use Keltanas\PageBundle\Event\PostEvent;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
