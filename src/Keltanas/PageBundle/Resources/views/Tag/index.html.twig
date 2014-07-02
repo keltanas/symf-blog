@@ -1,5 +1,9 @@
 {% extends "::base.html.twig" %}
 
+{% block meta %}<meta name="robots" content="none"/>
+    <meta name="robots" content="noarchive"/>
+{% endblock %}
+
 {% block title %}{{ "Tag"|trans }}: {{ name }}{% endblock %}
 
 {% block body %}
