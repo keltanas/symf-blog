@@ -8,8 +8,13 @@ php:
 before_script:
   - mkdir app/cache app/logs
   - chmod 777 app/cache app/logs
-  - composer install -n
+  - composer install -n -o --prefer-dist
   - sleep 3
 
 script:
+  - ./app/console --env=test -n doctrine:database:create
+  - ./app/console --env=test -n doctrine:schema:create
+  - ./app/console --env=test -n -v doctrine:fixtures:load
   - ./bin/behat
+  - ./app/console --env=test -n --force doctrine:database:drop
+

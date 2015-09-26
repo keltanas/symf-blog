@@ -8,7 +8,6 @@
 
 namespace Keltanas\Common;
 
-use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as SymfonyController;
 use Knp\Component\Pager\Paginator;
