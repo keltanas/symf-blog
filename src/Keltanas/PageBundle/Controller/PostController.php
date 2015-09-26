@@ -12,7 +12,7 @@ use Knp\Component\Pager\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
 
 use Keltanas\PageBundle\Entity\Post;
-use Keltanas\PageBundle\Form\PostType;
+use Keltanas\PageBundle\Form\Type\PostType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -187,7 +187,7 @@ class PostController extends Controller
             throw new AccessDeniedException("Post belongs to another author");
         }
 
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('post') || $request->isMethod('delete')) {
             $form->submit($request);
             if ($form->isValid()) {
                 $event = new PostEvent($this->getEntityManager(), $entity);

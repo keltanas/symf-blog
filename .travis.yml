@@ -1,10 +1,20 @@
 language: php
 
 php:
-  - 5.3.3
-  - 5.3
   - 5.4
+  - 5.5
+  - 5.6
 
-before_script: composer install -n
+before_script:
+  - mkdir app/cache app/logs
+  - chmod 777 app/cache app/logs
+  - composer install -n -o --prefer-dist
+  - sleep 3
 
-script: phpunit -c app
+script:
+  - ./app/console --env=test -n doctrine:database:create
+  - ./app/console --env=test -n doctrine:schema:create
+  - ./app/console --env=test -n -v doctrine:fixtures:load
+  - ./bin/behat
+  - ./app/console --env=test -n --force doctrine:database:drop
+

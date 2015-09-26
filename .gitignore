@@ -21,6 +21,8 @@ app/config/parameters.yml
 web/google*
 web/yandex*
 
+/bin
+
 # composer
 composer.lock
 composer.phar

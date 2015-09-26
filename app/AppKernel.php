@@ -27,9 +27,10 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
 
+            new keltanas\Bundle\YandexMetrikaBundle\keltanasYandexMetrikaBundle(),
+
             new Keltanas\PageBundle\KeltanasPageBundle(),
             new Keltanas\UserBundle\KeltanasUserBundle(),
-            new keltanas\Bundle\YandexMetrikaBundle\keltanasYandexMetrikaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
