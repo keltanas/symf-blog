@@ -11,15 +11,12 @@ use Keltanas\PageBundle\Repository\PostRepository;
 use Keltanas\PageBundle\Repository\TagRepository;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class TagController extends Controller
 {
     /**
      * @param Request $request
      * @param $name
-     *
-     * @Template()
      *
      * @return array
      */
@@ -38,10 +35,10 @@ class TagController extends Controller
             10
         );
 
-        return [
+        return $this->render('KeltanasPageBundle:Tag:index.html.twig', [
             'entities' => $entities,
             'name' => $name,
-        ];
+        ]);
     }
 
     public function tagsCloudAction($max = 20)
