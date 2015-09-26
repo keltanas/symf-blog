@@ -85,9 +85,9 @@ class Controller extends SymfonyController
      * @throws
      * @return object
      */
-    protected function findOr404($entityName, $id, $lockMode = LockMode::NONE, $lockVersion = null)
+    protected function findOr404($entityName, $id)
     {
-        if (!($entity = $this->getEntityManager()->find($entityName, $id, $lockMode, $lockVersion))) {
+        if (!($entity = $this->getEntityManager()->find($entityName, $id))) {
             throw $this->createNotFoundException(sprintf('Unable to find "%s" entity with id %d.', $entityName, $id));
         }
 

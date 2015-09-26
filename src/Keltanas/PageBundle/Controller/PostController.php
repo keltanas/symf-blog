@@ -187,7 +187,7 @@ class PostController extends Controller
             throw new AccessDeniedException("Post belongs to another author");
         }
 
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('post') || $request->isMethod('delete')) {
             $form->submit($request);
             if ($form->isValid()) {
                 $event = new PostEvent($this->getEntityManager(), $entity);
