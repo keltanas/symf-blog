@@ -3,11 +3,6 @@ parameters:
     keltanas_page.markdown_handler.listener.class: Keltanas\PageBundle\EventListener\MarkdownHandlerListener
 
 services:
-    dbal.session_init.listener:
-        class: Doctrine\DBAL\Event\Listeners\MysqlSessionInit
-        tags:
-            - { name: doctrine.event_listener, event: postConnect }
-
     session.memcached:
         class: Memcached
         calls:
