@@ -82,7 +82,7 @@ braincrafted_bootstrap:
     jquery_path: %kernel.root_dir%/../web/bundles/keltanaspage/js/jquery-1.10.2.js
     auto_configure:
         assetic: false
-        twig: true
+        twig: false
         knp_menu: true
         knp_paginator: true
 
