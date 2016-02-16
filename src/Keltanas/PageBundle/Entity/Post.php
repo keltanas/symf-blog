@@ -4,7 +4,6 @@ namespace Keltanas\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Keltanas\UserBundle\Entity\User;
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
