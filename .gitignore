@@ -11,6 +11,7 @@ web/fonts
 web/img
 web/css
 web/js
+web/lib
 app/SymfonyRequirements.php
 
 # Configuration files

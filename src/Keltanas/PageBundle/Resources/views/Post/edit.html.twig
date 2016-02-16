@@ -2,12 +2,6 @@
 
 {% block title %}{{ "Post edit"|trans }} {{ entity.title }}{% endblock %}
 
-{% block javascripts %}
-    {% javascripts '@KeltanasPageBundle/Resources/public/js/jquery.preview.js' filter='?yui_js' %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
-
 {% block body -%}
     <h1>{{ block('title') }}</h1>
 

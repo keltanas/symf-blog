@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Keltanas\PageBundle\Repository\PostRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Post extends ContainerAware
+class Post
 {
     const STATUS_DRAFT = 0;
     const STATUS_PUBLIC = 1;

@@ -11,3 +11,5 @@ change:
 
 login:
     title: Вход
+
+'Bad credentials.': Неверные данные

@@ -7,6 +7,7 @@
 namespace Keltanas\PageBundle\Controller;
 
 use Keltanas\Common\Controller;
+use Keltanas\PageBundle\Entity\Tag;
 use Keltanas\PageBundle\Repository\PostRepository;
 use Keltanas\PageBundle\Repository\TagRepository;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
@@ -45,27 +46,12 @@ class TagController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         /** @var TagRepository $repository */
-        $repository = $em->getRepository('KeltanasPageBundle:Tag');
+        $repository = $em->getRepository(Tag::class);
 
-        $qb = $repository->createQueryBuilder('t')->where('t.freq > 0')->orderBy('t.freq', 'desc')->setMaxResults($max);
-        $tags = $qb->getQuery()->getArrayResult();
-
-        $maxFreq = array_reduce($tags, function($max, $tag){
-                return $max = ($tag['freq'] > $max ? $tag['freq'] : $max);
-            }, 0);
-
-        $tags = array_map(function($tag) use ($maxFreq) {
-                $tag['freqPercent'] = round(15 * $tag['freq'] / $maxFreq) + 10;
-                return $tag;
-            }, $tags);
-
-        usort($tags, function($tag1, $tag2) {
-                return strcasecmp($tag1['name'], $tag2['name']);
-            });
+        $tags = $repository->findSortedTags($max);
 
         return $this->render(
             'KeltanasPageBundle:Tag:tagsCloud.html.twig', [
-                'maxFreq' => $maxFreq,
                 'tags' => $tags,
             ]
         );

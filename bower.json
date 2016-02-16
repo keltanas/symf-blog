@@ -1,0 +1,26 @@
+{
+  "name": "blog",
+  "version": "0.0.0",
+  "homepage": "",
+  "authors": [
+    "keltanas <keltanas@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "static/lib",
+    "test"
+  ],
+  "dependencies": {
+    "jquery": "~2.2",
+    "jquery-form": "~3",
+    "blockui": "http://malsup.github.io/jquery.blockUI.js",
+    "bootstrap": "3.3.*",
+    "bootswatch": "3.3.*",
+    "fancybox": "~2.1"
+  },
+  "resolutions": {
+    "bootstrap": "3.3.*"
+  }
+}

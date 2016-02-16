@@ -23,7 +23,8 @@
             <hr>
             {% if entity.tags %}
             <div class="pull-left">
-                <i class="glyphicon glyphicon-tags"></i> <small>{% for tag in entity.tagsArray %}{{ label(tag) }} {% endfor %}</small><br>
+                <i class="glyphicon glyphicon-tags"></i>
+                <small>{% for tag in entity.tagsArray %}<span class="label label-default">{{ tag }}</span> {% endfor %}</small><br>
             </div>
             {% endif %}
             <div class="text-right">

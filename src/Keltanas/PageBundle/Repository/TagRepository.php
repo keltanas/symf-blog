@@ -12,4 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagRepository extends EntityRepository
 {
+    public function findSortedTags($max = 10)
+    {
+        $qb = $this->createQueryBuilder('t')->where('t.freq > 0')->orderBy('t.freq', 'desc')->setMaxResults($max);
+        $tags = $qb->getQuery()->getArrayResult();
+
+        $maxFreq = array_reduce($tags, function($max, $tag){
+            return $max = ($tag['freq'] > $max ? $tag['freq'] : $max);
+        }, 0);
+
+        $tags = array_map(function($tag) use ($maxFreq) {
+            $tag['freqPercent'] = round(15 * $tag['freq'] / $maxFreq) + 10;
+            return $tag;
+        }, $tags);
+
+        usort($tags, function($tag1, $tag2) {
+            return strcasecmp($tag1['name'], $tag2['name']);
+        });
+
+        return $tags;
+    }
 }
