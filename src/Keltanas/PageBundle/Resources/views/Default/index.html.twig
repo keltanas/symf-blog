@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}KelTanas`s blog{% endblock %}
+{% block title %}Шпаргалки Просто Программиста{% endblock %}
 
 {% block body %}
     <h1>{{ block('title') }}</h1>
@@ -13,6 +13,7 @@
         {% endif %}
     <h2><a href="{{ path('post_show', {id: entity.id}) }}">{{ entity.title }}</a></h2>
     {{ entity.contentCutedHtml|raw }}
+    <p><a href="{{ path('post_show', {id: entity.id}) }}" title="{{ entity.title }}">TL;DR</a></p>
     <hr>
     {% if entity.tags %}
     <div class="pull-left"><i class="glyphicon glyphicon-tags"></i> <small>
