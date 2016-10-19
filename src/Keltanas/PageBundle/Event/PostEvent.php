@@ -24,7 +24,7 @@ class PostEvent extends Event
     /** @var EntityManager */
     private $em;
 
-    function __construct(EntityManager $em, Post $entity)
+    public function __construct(EntityManager $em, Post $entity)
     {
         $this->em     = $em;
         $this->entity = $entity;
