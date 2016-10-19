@@ -3,15 +3,6 @@ parameters:
     keltanas_page.markdown_handler.listener.class: Keltanas\PageBundle\EventListener\MarkdownHandlerListener
 
 services:
-    session.memcached:
-        class: Memcached
-        calls:
-            - [ addServer, [ %session_memcached_host%, %session_memcached_port% ]]
-
-    session.handler.memcached:
-        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
-        arguments: [ @session.memcached, { prefix: %session_memcached_prefix%, expiretime: %session_memcached_expire% } ]
-
     keltanas_page.tags_handler.subscriber:
         class: %keltanas_page.tags_handler.subscriber.class%
         tags:
