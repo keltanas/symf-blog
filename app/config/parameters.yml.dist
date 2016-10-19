@@ -1,8 +1,8 @@
 parameters:
-    database_driver:   pdo_mysql
+    database_driver:   pdo_sqlite
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
+    database_name:     blog_database
     database_user:     root
     database_password: ~
 
@@ -11,7 +11,7 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    locale:            en
+    locale:            ru
     secret:            d9823hf9q08ohfqyhf982gefp9q8g2f9p9
 
     gravatar_hash: ~

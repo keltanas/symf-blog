@@ -22,9 +22,11 @@
             <span itemprop="articleBody">{{ entity.contentHtml|raw }}</span>
             <hr>
             {% if entity.tags %}
-            <div class="pull-left">
-                <i class="glyphicon glyphicon-tags"></i>
-                <small>{% for tag in entity.tagsArray %}<span class="label label-default">{{ tag }}</span> {% endfor %}</small><br>
+            <div class="pull-left"><i class="glyphicon glyphicon-tags"></i> <small>
+                    {% for tag in entity.tagsArray %}
+                        <a href="{{ path('keltanas_page_tag', {"name": tag}) }}"><span class="label label-info">{{ tag }}</span></a>
+                    {% endfor %}
+                </small>
             </div>
             {% endif %}
             <div class="text-right">

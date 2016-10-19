@@ -1,0 +1,25 @@
+{% if is_granted('ROLE_ADMIN') %}
+    <div class="pull-right">
+        <a href="{{ path("post_edit", {id: entity.id}) }}"><i class="glyphicon glyphicon-edit"></i> {{ "Edit"|trans }}</a>
+    </div>
+{% endif %}
+
+<h2><a href="{{ path('post_show', {id: entity.id}) }}">{{ entity.title }}</a></h2>
+
+{{ entity.contentCutedHtml|raw }}
+
+<p><a href="{{ path('post_show', {id: entity.id}) }}" title="{{ entity.title }}">TL;DR</a></p>
+
+<hr>
+
+{% if entity.tags %}
+    <div class="pull-left"><i class="glyphicon glyphicon-tags"></i> <small>
+            {% for tag in entity.tagsArray %}
+                <a href="{{ path('keltanas_page_tag', {"name": tag}) }}"><span class="label label-info">{{ tag }}</span></a>
+            {% endfor %}
+        </small></div>
+{% endif %}
+
+<div class="text-right"><small>{{ "Created at"|trans }}: {{ entity.createdAt|date("d.m.Y H:i") }}</small></div>
+
+<hr>

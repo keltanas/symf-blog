@@ -5,7 +5,7 @@ Feature: page
     Scenario: Check opening public pages
         Given I go to "/"
         Then the response status code should be 200
-         And I should see "KelTanas`s blog" in the "h1" element
+         And I should see "Шпаргалки Просто Программиста" in the "h1" element
          And I should see "Облако меток" in the "h3" element
          And I should see "Полезные ссылки"
         When I follow "Обо мне"
