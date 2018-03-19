@@ -47,11 +47,13 @@ Feature: page
         When I fill in the following:
           | Титул | Foo |
           | Содержание в формате MarkDown | Bar |
+          | Метки | alala |
          And I press "Сохранить"
 
         Then the response status code should be 200
         And I should see "Foo" in the "h1" element
         And I should see "Bar"
+        And I should see "alala" in the "div.tags-cloud" element
 
       When I follow "Удалить"
         Then the response status code should be 200
@@ -61,3 +63,4 @@ Feature: page
         Then I should see "Список постов" in the "h1" element
          And I should not see "Ololo"
          And I should not see "Foo"
+         And I should not see "alala" in the "div.tags-cloud" element

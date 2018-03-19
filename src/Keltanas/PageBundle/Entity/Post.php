@@ -258,11 +258,10 @@ class Post
     public function getTagsArray($tags = null)
     {
         if (null === $tags) {
-            $tags = $this->getTags();
+            $tags = "";
         }
         return preg_split('/\s*,\s*/',trim($tags),-1,PREG_SPLIT_NO_EMPTY);
     }
-
 
     /**
      * Set status

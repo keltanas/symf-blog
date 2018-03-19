@@ -23,8 +23,8 @@
             <hr>
             {% if entity.tags %}
             <div class="pull-left"><i class="glyphicon glyphicon-tags"></i> <small>
-                    {% for tag in entity.tagsArray %}
-                        <a href="{{ path('keltanas_page_tag', {"name": tag}) }}"><span class="label label-info">{{ tag }}</span></a>
+                    {% for tag in entity.tagsArray(entity.tags) %}
+                        &nbsp;<a class="label label-info" href="{{ path('keltanas_page_tag', {"name": tag}) }}">{{ tag }}</a>
                     {% endfor %}
                 </small>
             </div>

@@ -149,7 +149,7 @@
 
     {# FOOTER #}
 
-    <div class="navbar navbar-fixed-bottom navbar-inverse">
+    {% spaceless %}<div class="navbar navbar-fixed-bottom navbar-inverse">
         <div class="navbar-inner">
             <div class="container">
                 <ul class="nav navbar-nav">
@@ -165,7 +165,7 @@
                 {#</ul>#}
             </div>
         </div>
-    </div>
+    </div>{% endspaceless %}
 
     <script type="text/javascript">{% spaceless %}(function() {
             if (window.pluso)if (typeof window.pluso.start == "function") return;

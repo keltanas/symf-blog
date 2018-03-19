@@ -21,3 +21,5 @@ parameters:
     disqus_shortname: ~
 
     ya_tracking: 123456789
+
+    user_reply_email: noreply@ermin.ru

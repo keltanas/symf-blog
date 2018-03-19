@@ -42,7 +42,7 @@ class TagsHandlerSubscriber implements EventSubscriberInterface
     public function onPostRemove(PostEvent $event)
     {
         $this->em = $event->getEntityManager();
-        $this->removeTags($event->getEntity()->getTagsArray());
+        $this->removeTags($event->getEntity()->getTagsArray($event->getEntity()->getTags()));
     }
 
     public function onPostCreate(PostEvent $event)
@@ -50,7 +50,7 @@ class TagsHandlerSubscriber implements EventSubscriberInterface
         $this->em = $event->getEntityManager();
 
         if (Post::STATUS_PUBLIC == $event->getEntity()->getStatus()) {
-            $this->addTags($event->getEntity()->getTagsArray());
+            $this->addTags($event->getEntity()->getTagsArray($event->getEntity()->getTags()));
         }
     }
 
@@ -81,7 +81,7 @@ class TagsHandlerSubscriber implements EventSubscriberInterface
         $newTags = $changeSet['tags'][1];
         $newTagsArray = $entity->getTagsArray($newTags);
 
-        if ($newStatus && $newStatus == $oldStatus) {
+        if ($newStatus && $oldStatus) {
             $this->addTags(array_values(array_diff($newTagsArray, $oldTagsArray)));
             $this->removeTags(array_values(array_diff($oldTagsArray, $newTagsArray)));
         } elseif ($newStatus && !$oldStatus) {
@@ -100,7 +100,7 @@ class TagsHandlerSubscriber implements EventSubscriberInterface
             return;
         }
         /** @var TagRepository $tagRepository */
-        $tagRepository = $this->em->getRepository('KeltanasPageBundle:Tag');
+        $tagRepository = $this->em->getRepository(Tag::class);
         foreach ($tags as $tagName) {
             $tag = $tagRepository->findOneBy(['name'=>$tagName]);
             if (!$tag) {
@@ -123,7 +123,7 @@ class TagsHandlerSubscriber implements EventSubscriberInterface
             return;
         }
         /** @var TagRepository $tagRepository */
-        $tagRepository = $this->em->getRepository('KeltanasPageBundle:Tag');
+        $tagRepository = $this->em->getRepository(Tag::class);
         $tagsList = $tagRepository->findBy(['name'=>$tags]);
         /** @var Tag $tag */
         foreach ($tagsList as $tag) {
