@@ -14,7 +14,7 @@
         "behat/symfony2-extension": "~2.0"
     },
     "require": {
-        "php": ">=5.5",
+        "php": ">=7.0",
         "symfony/symfony": "~2.8.5",
         "doctrine/orm": "~2.5",
         "doctrine/doctrine-bundle": "~1.2",
@@ -30,6 +30,16 @@
         "sensio/framework-extra-bundle": "~3.0",
         "sensio/generator-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
+
+        "zendframework/zend-code": "3.0.*",
+        "ocramius/package-versions": "1.2.*",
+        "doctrine/cache": "1.6.*",
+        "doctrine/instantiator": "1.0.*",
+        "doctrine/inflector": "1.2.*",
+        "doctrine/dbal": "2.5.*",
+        "doctrine/data-fixtures": "1.2.*",
+        "doctrine/common": "2.7.*",
+        "doctrine/collections": "1.4.*",
 
         "knplabs/knp-paginator-bundle": "2.4.*",
         "knplabs/knp-menu-bundle": "~2.0",
