@@ -32,8 +32,7 @@ twig:
         google_analytics: %google_analytics%
         google_plus_id: %google_plus_id%
         disqus_shortname: %disqus_shortname%
-    form:
-        resources: ['bootstrap_3_layout.html.twig']
+    form_themes: ['bootstrap_3_layout.html.twig']
 
 # Doctrine Configuration
 doctrine:

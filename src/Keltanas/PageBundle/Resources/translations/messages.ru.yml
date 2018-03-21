@@ -36,7 +36,8 @@ Author: Автор
 About me: Обо мне
 Blog: Блог
 
-Login: Login
+Login: Вход
+Logout: Выход
 
 blog:
     title: Блог

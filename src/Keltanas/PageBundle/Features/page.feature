@@ -15,7 +15,7 @@ Feature: page
     @mink:symfony2
     Scenario: Check manage posts
         Given I go to "/"
-        When I follow "Login"
+        When I follow "Вход"
         Then the response status code should be 200
 
         When I fill in the following:
@@ -26,7 +26,7 @@ Feature: page
          And I should see "Новый пост"
          And I should see "Все посты"
          And I should see "keltanas"
-         And I should see "Logout"
+         And I should see "Выход"
 
         When I follow "Новый пост"
         Then the response status code should be 200

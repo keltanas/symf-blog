@@ -3,6 +3,7 @@
 namespace Keltanas\PageBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Keltanas\PageBundle\Entity\Post;
 use Keltanas\UserBundle\Entity\User;
 
 /**
@@ -17,6 +18,8 @@ class PostRepository extends EntityRepository
      * @param User $user
      *
      * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getCount(User $user = null)
     {
@@ -29,9 +32,32 @@ class PostRepository extends EntityRepository
     }
 
     /**
+     * @param int $offset
+     * @param int $limit
+     * @param User|null $user
+     * @return Post[]
+     */
+    public function getAll($offset = 0, $limit = 100, User $user = null)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p');
+        if (null !== $user) {
+            $qb->where('p.account = :user')->setParameter('user', $user->getId());
+        }
+
+        $qb->setFirstResult($offset);
+        $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * @param $tagName
      *
+     * @param User|null $user
      * @return \Doctrine\ORM\Query
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getQueryForPaginator($tagName = null, User $user = null)
     {
