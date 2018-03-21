@@ -10,9 +10,9 @@
 {% block body -%}
 
     {% if 0 == entity.status %}
-        <div class="alert alert-danger">
-            {{ "This is draft"|trans }}
-        </div>
+    <div class="alert alert-danger">
+        {{ "This is draft"|trans }}
+    </div>
     {% endif %}
 
     {% if is_granted('ROLE_USER') or entity.status %}
@@ -21,11 +21,14 @@
             <h1 itemprop="name">{{ block("title") }}</h1>
             <span itemprop="articleBody">{{ entity.contentHtml|raw }}</span>
             <hr>
+            {% spaceless %}
             {% if entity.tags %}
-            <div class="pull-left"><i class="glyphicon glyphicon-tags"></i> <small>
-                    {% for tag in entity.tagsArray(entity.tags) %}
-                        &nbsp;<a class="label label-info" href="{{ path('keltanas_page_tag', {"name": tag}) }}">{{ tag }}</a>
-                    {% endfor %}
+            <div class="pull-left">
+                <i class="glyphicon glyphicon-tags"></i>
+                <small>
+                {% for tag in entity.tagsArray(entity.tags) %}
+                &nbsp;<a class="label label-info" href="{{ path('keltanas_page_tag', {"name": tag}) }}">{{ tag }}</a>
+                {% endfor %}
                 </small>
             </div>
             {% endif %}
@@ -36,9 +39,11 @@
                 </small><br>
                 <small>{{ "Author"|trans }}:
                     <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-                        <span itemprop="name">{{ entity.account.username }}</span></span>
+                        <span itemprop="name">{{ entity.account.username }}</span>
+                    </span>
                 </small>
             </div>
+            {% endspaceless %}
 
             <a href="{{ path('keltanas_page_homepage') }}" class="btn btn-default btn-sm">&laquo; {{ "Back to homepage"|trans }}</a>
             {% if is_granted('ROLE_ADMIN') %}
@@ -49,8 +54,7 @@
                 {{ "Delete"|trans }}
             </a>
             {% endif %}
-            </div>
-
+        </div>
 
         {% if disqus_shortname %}
         <hr>

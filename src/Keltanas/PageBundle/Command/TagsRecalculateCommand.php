@@ -63,9 +63,12 @@ class TagsRecalculateCommand extends ContainerAwareCommand
             if (isset($tags[$tag->getName()])) {
                 $tag->setFreq($tags[$tag->getName()]);
                 unset($tags[$tag->getName()]);
-                $doctrine->getManager()->persist($tag);
                 $output->writeln("<comment>Обновлен тег {$tag->getName()}: {$tag->getFreq()}</comment>");
+            } else {
+                $tag->setFreq(0);
+                $output->writeln("<comment>Обнулен тег {$tag->getName()}: {$tag->getFreq()}</comment>");
             }
+            $doctrine->getManager()->persist($tag);
         }
 
         foreach ($tags as $tagName => $freq) {
