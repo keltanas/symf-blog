@@ -20,7 +20,8 @@
     "bootstrap": "3.3.*",
     "bootswatch": "3.3.*",
     "fancybox": "~2.1",
-    "ace": "~1.2"
+    "ace": "~1.2",
+    "bootstrap-social": "5.1.1"
   },
   "resolutions": {
     "bootstrap": "3.3.*"

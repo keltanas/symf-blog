@@ -11,7 +11,8 @@
         "behat/mink": "~1.5",
         "behat/mink-extension": "~2.0",
         "behat/mink-browserkit-driver": "~1.0",
-        "behat/symfony2-extension": "~2.0"
+        "behat/symfony2-extension": "~2.0",
+        "squizlabs/php_codesniffer": "3.2.*"
     },
     "require": {
         "php": ">=7.0",
@@ -62,6 +63,14 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "cs": "bin/phpcs src/*",
+        "test": [
+            "./app/console --env=test -n doctrine:database:create",
+            "./app/console --env=test -n doctrine:schema:create",
+            "./app/console --env=test -n -v doctrine:fixtures:load",
+            "./bin/behat",
+            "./app/console --env=test -n doctrine:database:drop --force"
         ]
     },
     "config": {
