@@ -1,0 +1,22 @@
+stages:
+  - test
+
+before_script:
+  - mkdir app/cache app/logs
+  - chmod 777 app/cache app/logs
+  - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  - php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+  - php composer-setup.php
+  - php -r "unlink('composer-setup.php');"
+  - php composer.phar install --prefer-dist -o -n
+  - php app/console --env=test -n doctrine:database:create
+  - php app/console --env=test -n doctrine:schema:create
+  - php app/console --env=test -n -v doctrine:fixtures:load
+
+after_script:
+  - php app/console --env=test -n doctrine:database:drop --force
+
+test:
+  stage: test
+  script:
+    - php bin/behat

@@ -53,17 +53,16 @@ class PostRepository extends EntityRepository
 
     /**
      * @param $tagName
-     *
      * @param User|null $user
+     * @param bool $isAdmin
+     *
      * @return \Doctrine\ORM\Query
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getQueryForPaginator($tagName = null, User $user = null)
+    public function getQueryForPaginator($tagName = null, User $user = null, $isAdmin = false)
     {
         $qb = $this->createQueryBuilder('p')
-            ->where('p.status = :status')
-            ->setParameter('status', 1)
             ->orderBy('p.createdAt', 'desc')
         ;
 
@@ -72,6 +71,10 @@ class PostRepository extends EntityRepository
                 ->andWhere('p.tags LIKE :name')
                 ->setParameter('name', '%'.$tagName.'%')
             ;
+        }
+
+        if (false === $isAdmin) {
+            $qb->where('p.status = :status')->setParameter('status', 1);
         }
 
         if (null !== $user) {
@@ -83,6 +86,7 @@ class PostRepository extends EntityRepository
         $qb->select($qb->expr()->count('p'));
         $count = $qb->getQuery()->getSingleScalarResult();
         $query->setHint('knp_paginator.count', $count);
+
         return $query;
     }
 }

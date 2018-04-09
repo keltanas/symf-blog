@@ -37,7 +37,7 @@ class PostController extends Controller
 
         $user = $this->isGranted('ROLE_ADMIN') ? null : $this->getUser();
 
-        $query = $repository->getQueryForPaginator(null, $user);
+        $query = $repository->getQueryForPaginator(null, $user, $this->isGranted('ROLE_ADMIN'));
 
         /** @var $pagination SlidingPagination */
         $entities = $paginator->paginate(

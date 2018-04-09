@@ -1,0 +1,31 @@
+version: '3'
+services:
+  app:
+    image: registry.ermin.ru/keltanas/siteforever-test-runner:7.2
+    links:
+      - mysql
+    environment:
+      SYMFONY__DATABASE_DRIVER: pdo_mysql
+      SYMFONY__DATABASE_HOST: mysql
+      SYMFONY__DATABASE_PORT: 3306
+      SYMFONY__DATABASE_NAME: symf_blog
+      SYMFONY__DATABASE_USER: blog
+      SYMFONY__DATABASE_PASSWORD: blog
+    ports: ["8000:8000"]
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql
+    command: ["php", "app/console", "server:run", "0.0.0.0:8000"]
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ~
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_USER: blog
+      MYSQL_PASSWORD: blog
+      MYSQL_DATABASE: symf_blog
+    ports: ["13306:3306"]

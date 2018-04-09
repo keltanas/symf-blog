@@ -40,6 +40,15 @@ class AppKernel extends Kernel
 
         return $bundles;
     }
+    public function getCacheDir()
+    {
+        return "/var/cache/{$this->getName()}/{$this->environment}";
+    }
+
+    public function getLogDir()
+    {
+        return "/var/logs/{$this->getName()}";
+    }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
