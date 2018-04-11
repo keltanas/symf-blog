@@ -26,3 +26,6 @@ web/yandex*
 
 # composer
 composer.phar
+
+# node
+node_modules
