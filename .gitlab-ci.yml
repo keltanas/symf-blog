@@ -6,7 +6,7 @@ services:
     alias: mysql
 
 variables:
-  MYSQL_ROOT_PASSWORD: ~
+  MYSQL_ROOT_PASSWORD: "null"
   MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
   MYSQL_USER: blog
   MYSQL_PASSWORD: blog
