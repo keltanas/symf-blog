@@ -17,6 +17,12 @@ web_profiler:
     toolbar: false
     intercept_redirects: false
 
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path: "php://stdout"
+            level: warning
+
 swiftmailer:
     disable_delivery: true
-
