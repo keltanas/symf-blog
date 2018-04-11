@@ -4,12 +4,13 @@ stages:
 services:
   - name: mysql:5.7
     alias: mysql
-    variables:
-      MYSQL_ROOT_PASSWORD: ~
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_USER: blog
-      MYSQL_PASSWORD: blog
-      MYSQL_DATABASE: symf_blog
+
+variables:
+  MYSQL_ROOT_PASSWORD: ~
+  MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  MYSQL_USER: blog
+  MYSQL_PASSWORD: blog
+  MYSQL_DATABASE: symf_blog
 
 before_script:
   - mkdir app/cache app/logs
