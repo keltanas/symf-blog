@@ -1,6 +1,8 @@
 stages:
   - test
 
+image: registry.ermin.ru/keltanas/siteforever-test-runner:7.2
+
 services:
   - name: mysql:5.7
     alias: mysql
